@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+
+  <title>Python Fireworks</title>
+
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="origin" />
+  <meta name="generator" content="Pelican" />
+<link href="https://jordan-Milne.github.io/Blog/blog2.html" rel="canonical" />
+  <!-- Feed -->
+        <link href="https://jordan-Milne.github.io/Blog/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Jordan's Data Science Secrets Full Atom Feed" />
+          <link href="https://jordan-Milne.github.io/Blog/feeds/{slug}.atom.xml" type="application/atom+xml" rel="alternate" title="Jordan's Data Science Secrets Categories Atom Feed" />
+
+  <link href="https://jordan-Milne.github.io/Blog/theme/css/style.css" type="text/css" rel="stylesheet" />
+
+  <!-- Code highlight color scheme -->
+      <link href="https://jordan-Milne.github.io/Blog/theme/css/code_blocks/github.css" rel="stylesheet">
+
+
+  <!-- Custom fonts -->
+  <link href='https://fonts.googleapis.com/css?family=Montserrat:400,300' rel='stylesheet' type='text/css' />
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css" />
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+
+
+    <meta name="description" content="How to Make Fireworks in python I used Turtle, from the python standard library to make art that resembles fireworks. I created a series...">
+
+    <meta name="author" content="Jordan Milne">
+
+
+
+
+
+<!-- Open Graph -->
+<meta property="og:site_name" content="Jordan's Data Science Secrets"/>
+<meta property="og:title" content="Python Fireworks"/>
+<meta property="og:description" content="How to Make Fireworks in python I used Turtle, from the python standard library to make art that resembles fireworks. I created a series..."/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="https://jordan-Milne.github.io/Blog/blog2.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2019-09-12 11:35:00-04:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="https://jordan-Milne.github.io/Blog/author/jordan-milne.html">
+<meta property="article:section" content="misc"/>
+<meta property="og:image" content="https://jordan-Milne.github.io/Blog/theme/images/post-bg.jpg">
+
+<!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@J0rdans_secrets">
+    <meta name="twitter:title" content="Python Fireworks">
+    <meta name="twitter:url" content="https://jordan-Milne.github.io/Blog/blog2.html">
+
+        <meta name="twitter:image:src" content="https://jordan-Milne.github.io/Blog/theme/images/post-bg.jpg">
+
+      <meta name="twitter:description" content="How to Make Fireworks in python I used Turtle, from the python standard library to make art that resembles fireworks. I created a series...">
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "name": "Python Fireworks",
+  "headline": "Python Fireworks",
+  "datePublished": "2019-09-12 11:35:00-04:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "Jordan Milne",
+    "url": "https://jordan-Milne.github.io/Blog/author/jordan-milne.html"
+  },
+  "image": "https://jordan-Milne.github.io/Blog/theme/images/post-bg.jpg",
+  "url": "https://jordan-Milne.github.io/Blog/blog2.html",
+  "description": "How to Make Fireworks in python I used Turtle, from the python standard library to make art that resembles fireworks. I created a series..."
+}
+</script>
+</head>
+<!-- TODO : Body class -->
+<body class="home-template">
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+
+
+    </ul>
+  </div>
+</nav>
+    <!-- Progressbar -->
+    <div class="progress-container">
+        <span class="progress-bar"></span>
+    </div>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header id="post-header" >
+      <div class="inner">
+        <nav id="navigation">
+            <span id="home-button" class="nav-button">
+                <a class="home-button" href="https://jordan-Milne.github.io/Blog/" title="Home"><i class="ic ic-arrow-left"></i> Home</a>
+            </span>
+          <span id="menu-button" class="nav-button">
+            <a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
+          </span>
+        </nav>
+        <h1 class="post-title">Python Fireworks</h1>
+        <!-- TODO : Proper class for headline -->
+        <span class="post-meta">
+                <a href="https://jordan-Milne.github.io/Blog/author/jordan-milne.html">Jordan Milne</a>
+            | <time datetime="Thu 12 September 2019">Thu 12 September 2019</time>
+        </span>
+        <!-- TODO : Modified check -->
+      </div>
+    </header>
+
+  <section id="wrapper">
+    <a class="hidden-close"></a>
+
+    <!-- Post content -->
+    <main class="content" role="main">
+        <article class="post">
+        <div class="inner">
+            <section class="post-content">
+                <h1>How to Make Fireworks in python</h1>
+<p>I used Turtle, from the python standard library to make art that resembles fireworks. I created a series of multiple concentric circles with random initial and final radius as well as random widths for each circle.</p>
+<p>image</p>
+<p>first step was to import turtle which is basically a on screen pen that you can program. After that I imported <code>randint</code> and <code>numpy</code> as I wanted the circles to be different from eachother like fireworks. </p>
+<p>The function <code>circles</code> creates multiple of concetric circles that will pop in a random position on the screen as seen  using <code>circle_position</code>. Then a  colour for the circles is randomly selected from the set list colours. In the <code>for loop</code> the first circle diameter, last circle diameter and number of circles in between is randomly determined. The rest of the loop are turtle commands that draw a circle.</p>
+<p>The next function <code>make_circles</code> simply loops the <code>circle</code> function to make a series of multiple concentric circles that look like fireworks.</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">turtle</span>
+<span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">randint</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="n">turtle</span><span class="o">.</span><span class="n">speed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1">#turns off draw mode so circles pop up instantly</span>
+<span class="n">turtle</span><span class="o">.</span><span class="n">bgcolor</span><span class="p">(</span><span class="s1">&#39;black&#39;</span><span class="p">)</span> <span class="c1">#background black</span>
+
+
+<span class="k">print</span><span class="p">(</span><span class="n">turtle</span><span class="o">.</span><span class="n">Screen</span><span class="p">()</span><span class="o">.</span><span class="n">screensize</span><span class="p">())</span>
+<span class="k">def</span> <span class="nf">circles</span><span class="p">():</span>
+    <span class="n">circle_position</span> <span class="o">=</span> <span class="p">(</span><span class="n">randint</span><span class="p">(</span><span class="o">-</span><span class="mi">400</span><span class="p">,</span><span class="mi">400</span><span class="p">),</span> <span class="n">randint</span><span class="p">(</span><span class="o">-</span><span class="mi">300</span><span class="p">,</span><span class="mi">300</span><span class="p">))</span>  <span class="c1">#</span>
+    <span class="n">colours</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="s1">&#39;Deep Sky Blue&#39;</span><span class="p">,</span> <span class="s1">&#39;Chartreuse&#39;</span><span class="p">,</span> <span class="s1">&#39;Deep Pink&#39;</span><span class="p">,</span> <span class="s1">&#39;Aquamarine&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="s1">&#39;Yellow&#39;</span><span class="p">,</span> <span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="s1">&#39;purple&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="s1">&#39;grey&#39;</span><span class="p">)</span>
+    <span class="n">circle_colour</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">colours</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">50</span><span class="p">),</span> <span class="n">randint</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="mi">200</span><span class="p">),</span> <span class="n">randint</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">30</span><span class="p">)):</span>
+        <span class="n">turtle</span><span class="o">.</span><span class="n">width</span><span class="p">(</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">9</span><span class="p">))</span>
+        <span class="n">turtle</span><span class="o">.</span><span class="n">pencolor</span><span class="p">(</span><span class="n">circle_colour</span><span class="p">)</span>
+        <span class="n">turtle</span><span class="o">.</span><span class="n">penup</span><span class="p">()</span>  <span class="c1">#pen up</span>
+        <span class="n">turtle</span><span class="o">.</span><span class="n">setpos</span><span class="p">(</span><span class="n">circle_position</span><span class="p">)</span> <span class="c1">#setting random starting position</span>
+        <span class="n">turtle</span><span class="o">.</span><span class="n">right</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>    <span class="c1"># Face South</span>
+        <span class="n">turtle</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>   <span class="c1"># Move one radius</span>
+        <span class="n">turtle</span><span class="o">.</span><span class="n">right</span><span class="p">(</span><span class="mi">270</span><span class="p">)</span>   <span class="c1"># Back to start heading</span>
+        <span class="n">turtle</span><span class="o">.</span><span class="n">pendown</span><span class="p">()</span>    <span class="c1"># Put the pen back down</span>
+        <span class="n">turtle</span><span class="o">.</span><span class="n">circle</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>    <span class="c1"># Draw a circle</span>
+        <span class="n">turtle</span><span class="o">.</span><span class="n">penup</span><span class="p">()</span>      <span class="c1"># Pen up while we go home</span>
+        <span class="n">turtle</span><span class="o">.</span><span class="n">home</span><span class="p">()</span>       <span class="c1"># Head back to the start pos</span>
+
+<span class="k">def</span> <span class="nf">make_circles</span><span class="p">(</span><span class="n">number</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">circles</span><span class="p">()</span>
+<span class="n">make_circles</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+
+<span class="n">turtle</span><span class="o">.</span><span class="n">exitonclick</span><span class="p">()</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
+</pre></div>
+            </section>
+
+            <section class="post-info">
+                <div class="post-share">
+                    <a class="twitter" href="https://twitter.com/share?text=Python Fireworks&amp;url=https://jordan-Milne.github.io/Blog/blog2.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
+                    </a>
+                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://jordan-Milne.github.io/Blog/blog2.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
+                    </a>
+                    <a class="googleplus" href="https://plus.google.com/share?url=https://jordan-Milne.github.io/Blog/blog2.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
+                    </a>
+                    <div class="clear"></div>
+                </div>
+
+
+                <div class="clear"></div>
+
+
+                </section>
+
+
+                <aside class="post-nav">
+                    <div class="clear"></div>
+                </aside>
+
+            </div>
+        </article>
+    </main>
+      <!-- TODO : Body class -->
+    <div id="body-class" style="display: none;" class=""></div>
+
+    <footer id="footer">
+      <div class="inner">
+        <section class="credits">
+
+
+          <span class="credits-theme">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow">Attila</a></span>
+          <span class="credits-software">Published with <a href="https://github.com/getpelican/pelican" rel="nofollow">Pelican</a></span>
+        </section>
+      </div>
+    </footer>
+  </section>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://jordan-Milne.github.io/Blog/theme/js/script.js"></script>
+
+</body>
+</html>
