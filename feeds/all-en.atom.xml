@@ -8,7 +8,10 @@
 &lt;p&gt;first step was to import turtle which is basically a on screen pen that you can program. After that I imported &lt;code&gt;randint&lt;/code&gt; and &lt;code&gt;numpy&lt;/code&gt; as I wanted the circles to be different from eachother like fireworks. &lt;/p&gt;
 &lt;p&gt;The function &lt;code&gt;circles&lt;/code&gt; creates multiple of concetric circles that will pop in a random position on the screen as seen  using &lt;code&gt;circle_position&lt;/code&gt;. Then a  colour for the circles is randomly selected from the set list colours. In the &lt;code&gt;for loop&lt;/code&gt; the first circle diameter, last circle diameter and number of circles in between is randomly determined. The rest of the loop are turtle commands that draw a circle.&lt;/p&gt;
 &lt;p&gt;The next function &lt;code&gt;make_circles&lt;/code&gt; simply loops the &lt;code&gt;circle&lt;/code&gt; function to make a series of multiple concentric circles that look like fireworks.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="" src="https://www.youtube.com/watch?v=8MoQGbHboKs"&gt;&lt;/p&gt;
+&lt;p&gt;.. youtube:: 8MoQGbHboKs
+    :class: youtube-4x3
+    :allowfullscreen: no
+    :seamless: no&lt;/p&gt;
 &lt;p&gt;```python
 import turtle
 from random import randint
@@ -36,7 +39,7 @@ turtle.bgcolor('black') #background black&lt;/p&gt;
     for i in range(number+1):
         circles()
 make_circles(20)&lt;/p&gt;
-&lt;p&gt;turtle.exitonclick()&lt;/p&gt;</content><category term="misc"></category></entry><entry><title>Unpacking the Subplot</title><link href="https://jordan-Milne.github.io/Blog/blog1.html" rel="alternate"></link><published>2019-12-08T03:35:00-05:00</published><updated>2019-12-08T03:35:00-05:00</updated><author><name>Jordan Milne</name></author><id>tag:jordan-milne.github.io,2019-12-08:/Blog/blog1.html</id><summary type="html">&lt;h1&gt;&lt;strong&gt;Having Troubles with Subplots?"&lt;/strong&gt;&lt;/h1&gt;
+&lt;p&gt;turtle.exitonclick()```&lt;/p&gt;</content><category term="misc"></category></entry><entry><title>Unpacking the Subplot</title><link href="https://jordan-Milne.github.io/Blog/blog1.html" rel="alternate"></link><published>2019-12-08T03:35:00-05:00</published><updated>2019-12-08T03:35:00-05:00</updated><author><name>Jordan Milne</name></author><id>tag:jordan-milne.github.io,2019-12-08:/Blog/blog1.html</id><summary type="html">&lt;h1&gt;&lt;strong&gt;Having Troubles with Subplots?"&lt;/strong&gt;&lt;/h1&gt;
 &lt;p&gt;matplotlib might not be the quickest/easiest way to spin up visuals in python but it is extremely customizable. A powerful tool for plotting when using matplotlib is subplots. Subplots allow you to have multiple plots on one figure, but setting up these plots can get …&lt;/p&gt;</summary><content type="html">&lt;h1&gt;&lt;strong&gt;Having Troubles with Subplots?"&lt;/strong&gt;&lt;/h1&gt;
 &lt;p&gt;matplotlib might not be the quickest/easiest way to spin up visuals in python but it is extremely customizable. A powerful tool for plotting when using matplotlib is subplots. Subplots allow you to have multiple plots on one figure, but setting up these plots can get confusing. This blog post will outline how to correctly add key features to your subplot.&lt;/p&gt;
 &lt;p&gt;The first step is to import the necessary packages and data sets&lt;/p&gt;
