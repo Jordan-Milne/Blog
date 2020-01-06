@@ -11,7 +11,10 @@
 &lt;p&gt;.. youtube:: 8MoQGbHboKs
     :class: youtube-4x3
     :allowfullscreen: no
-    :seamless: no&lt;/p&gt;
+    :seamless: no
+&lt;div class="youtube youtube-4x3"&gt;
+&lt;iframe src="https://www.youtube.com/embed/8MoQGbHboKs"&gt;&lt;/iframe&gt;
+&lt;/div&gt;&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;turtle&lt;/span&gt;
 &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;random&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;randint&lt;/span&gt;
 &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;numpy&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;np&lt;/span&gt;
