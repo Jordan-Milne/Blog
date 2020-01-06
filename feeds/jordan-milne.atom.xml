@@ -8,7 +8,7 @@
 &lt;p&gt;first step was to import turtle which is basically a on screen pen that you can program. After that I imported &lt;code&gt;randint&lt;/code&gt; and &lt;code&gt;numpy&lt;/code&gt; as I wanted the circles to be different from eachother like fireworks. &lt;/p&gt;
 &lt;p&gt;The function &lt;code&gt;circles&lt;/code&gt; creates multiple of concetric circles that will pop in a random position on the screen as seen  using &lt;code&gt;circle_position&lt;/code&gt;. Then a  colour for the circles is randomly selected from the set list colours. In the &lt;code&gt;for loop&lt;/code&gt; the first circle diameter, last circle diameter and number of circles in between is randomly determined. The rest of the loop are turtle commands that draw a circle.&lt;/p&gt;
 &lt;p&gt;The next function &lt;code&gt;make_circles&lt;/code&gt; simply loops the &lt;code&gt;circle&lt;/code&gt; function to make a series of multiple concentric circles that look like fireworks.&lt;/p&gt;
-&lt;p&gt;.. youtube:: https://www.youtube.com/watch?v=8MoQGbHboKs
+&lt;p&gt;.. youtube:: 8MoQGbHboKs
     :class: youtube-4x3
     :allowfullscreen: no
     :seamless: no&lt;/p&gt;
