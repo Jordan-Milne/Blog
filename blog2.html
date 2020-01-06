@@ -139,46 +139,39 @@
             <section class="post-content">
                 <h3>How to Make Fireworks in Python</h3>
 <p>I used Turtle, from the python standard library to make art that resembles fireworks. I created a series of multiple concentric circles with random initial and final radius as well as random widths for each circle.</p>
-<p>https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.stack.imgur.com%2FSzOrn.png&amp;f=1&amp;nofb=1</p>
+<p><img alt="" src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.stack.imgur.com%2FSzOrn.png&amp;f=1&amp;nofb=1"></p>
 <p>first step was to import turtle which is basically a on screen pen that you can program. After that I imported <code>randint</code> and <code>numpy</code> as I wanted the circles to be different from eachother like fireworks. </p>
 <p>The function <code>circles</code> creates multiple of concetric circles that will pop in a random position on the screen as seen  using <code>circle_position</code>. Then a  colour for the circles is randomly selected from the set list colours. In the <code>for loop</code> the first circle diameter, last circle diameter and number of circles in between is randomly determined. The rest of the loop are turtle commands that draw a circle.</p>
 <p>The next function <code>make_circles</code> simply loops the <code>circle</code> function to make a series of multiple concentric circles that look like fireworks.</p>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">turtle</span>
-<span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">randint</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-<span class="n">turtle</span><span class="o">.</span><span class="n">speed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1">#turns off draw mode so circles pop up instantly</span>
-<span class="n">turtle</span><span class="o">.</span><span class="n">bgcolor</span><span class="p">(</span><span class="s1">&#39;black&#39;</span><span class="p">)</span> <span class="c1">#background black</span>
-
-
-<span class="k">def</span> <span class="nf">circles</span><span class="p">():</span>
-    <span class="n">circle_position</span> <span class="o">=</span> <span class="p">(</span><span class="n">randint</span><span class="p">(</span><span class="o">-</span><span class="mi">400</span><span class="p">,</span><span class="mi">400</span><span class="p">),</span> <span class="n">randint</span><span class="p">(</span><span class="o">-</span><span class="mi">300</span><span class="p">,</span><span class="mi">300</span><span class="p">))</span>  <span class="c1">#</span>
-    <span class="n">colours</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="s1">&#39;Deep Sky Blue&#39;</span><span class="p">,</span> <span class="s1">&#39;Chartreuse&#39;</span><span class="p">,</span> <span class="s1">&#39;Deep Pink&#39;</span><span class="p">,</span> <span class="s1">&#39;Aquamarine&#39;</span><span class="p">,</span>
-               <span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="s1">&#39;Yellow&#39;</span><span class="p">,</span> <span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="s1">&#39;purple&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="s1">&#39;grey&#39;</span><span class="p">)</span>
-    <span class="n">circle_colour</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">colours</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">50</span><span class="p">),</span> <span class="n">randint</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="mi">200</span><span class="p">),</span> <span class="n">randint</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">30</span><span class="p">)):</span>
-        <span class="n">turtle</span><span class="o">.</span><span class="n">width</span><span class="p">(</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">9</span><span class="p">))</span>
-        <span class="n">turtle</span><span class="o">.</span><span class="n">pencolor</span><span class="p">(</span><span class="n">circle_colour</span><span class="p">)</span>
-        <span class="n">turtle</span><span class="o">.</span><span class="n">penup</span><span class="p">()</span>  <span class="c1">#pen up</span>
-        <span class="n">turtle</span><span class="o">.</span><span class="n">setpos</span><span class="p">(</span><span class="n">circle_position</span><span class="p">)</span> <span class="c1">#setting random starting position</span>
-        <span class="n">turtle</span><span class="o">.</span><span class="n">right</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>    <span class="c1"># Face South</span>
-        <span class="n">turtle</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>   <span class="c1"># Move one radius</span>
-        <span class="n">turtle</span><span class="o">.</span><span class="n">right</span><span class="p">(</span><span class="mi">270</span><span class="p">)</span>   <span class="c1"># Back to start heading</span>
-        <span class="n">turtle</span><span class="o">.</span><span class="n">pendown</span><span class="p">()</span>    <span class="c1"># Put the pen back down</span>
-        <span class="n">turtle</span><span class="o">.</span><span class="n">circle</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>    <span class="c1"># Draw a circle</span>
-        <span class="n">turtle</span><span class="o">.</span><span class="n">penup</span><span class="p">()</span>      <span class="c1"># Pen up while we go home</span>
-        <span class="n">turtle</span><span class="o">.</span><span class="n">home</span><span class="p">()</span>       <span class="c1"># Head back to the start pos</span>
-
-<span class="k">def</span> <span class="nf">make_circles</span><span class="p">(</span><span class="n">number</span><span class="p">):</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
-        <span class="n">circles</span><span class="p">()</span>
-<span class="n">make_circles</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
-
-<span class="n">turtle</span><span class="o">.</span><span class="n">exitonclick</span><span class="p">()</span>
-</pre></div>
-
-
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
-</pre></div>
+<p><img alt="" src="https://www.youtube.com/watch?v=8MoQGbHboKs"></p>
+<p>```python
+import turtle
+from random import randint
+import numpy as np
+turtle.speed(0) #turns off draw mode so circles pop up instantly
+turtle.bgcolor('black') #background black</p>
+<p>def circles():
+    circle_position = (randint(-400,400), randint(-300,300))  #
+    colours = ('blue', 'Deep Sky Blue', 'Chartreuse', 'Deep Pink', 'Aquamarine',
+               'red', 'Yellow', 'white', 'purple', 'green', 'orange', 'grey')
+    circle_colour = np.random.choice(colours)
+    for i in range(randint(1,50), randint(100,200), randint(10,30)):
+        turtle.width(randint(1,9))
+        turtle.pencolor(circle_colour)
+        turtle.penup()  #pen up
+        turtle.setpos(circle_position) #setting random starting position
+        turtle.right(90)    # Face South
+        turtle.forward(i)   # Move one radius
+        turtle.right(270)   # Back to start heading
+        turtle.pendown()    # Put the pen back down
+        turtle.circle(i)    # Draw a circle
+        turtle.penup()      # Pen up while we go home
+        turtle.home()       # Head back to the start pos</p>
+<p>def make_circles(number):
+    for i in range(number+1):
+        circles()
+make_circles(20)</p>
+<p>turtle.exitonclick()</p>
             </section>
 
             <section class="post-info">
