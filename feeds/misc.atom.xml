@@ -66,7 +66,7 @@
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;&lt;img alt="png" src="output_3_0.png"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="png" src="images/output_3_0.png"&gt;&lt;/p&gt;
 &lt;p&gt;Now that there are some empty plots, we can fill them with data. In the first line of code below we create the subplot and have an axes label of "ax" but it can be anything (like "axs" or "axes") as long as you are consistent when you call on it later. To access a certain plot in the subplot we can locate it by using ax[row,column]. So to fill the middle top plot with data, &lt;code&gt;ax[0,1]&lt;/code&gt; is used so the plot knows we are targeting that subplot. Setting a title for a specific sublot is a little different than normal matplotlib plotting, again you start with identifying which sublot you want to give a title to with &lt;code&gt;ax[0,0]&lt;/code&gt; and then add &lt;code&gt;set_title()&lt;/code&gt; as seen below&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;fig&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ax&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;subplots&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;nrows&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ncols&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;sharex&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;False&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;sharey&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;figsize&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;9&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
 
@@ -78,7 +78,7 @@
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;&lt;img alt="png" src="output_5_0.png"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="png" src="images/output_5_0.png"&gt;&lt;/p&gt;
 &lt;p&gt;For 1D subplots only one parameter is needed in &lt;code&gt;ax[]&lt;/code&gt; as shown below. In the subplots below it is shown how do change the visual details of the sublot&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;c&lt;/code&gt; changes the colour of the data&lt;/li&gt;
@@ -98,7 +98,7 @@
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;&lt;img alt="png" src="output_7_0.png"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="png" src="images/output_7_0.png"&gt;&lt;/p&gt;
 &lt;p&gt;To give the sublots some flavour, use &lt;code&gt;plt.style.use('seaborn')&lt;/code&gt; which gives the sublots a background and a grid. In the figure below the x axis is the same for both sublots so in &lt;code&gt;plt.sublots()&lt;/code&gt;, &lt;code&gt;sharex&lt;/code&gt; can be set to &lt;code&gt;True&lt;/code&gt;. In addition, by adding &lt;code&gt;label&lt;/code&gt; to the subplot a legend can then be made by adding &lt;code&gt;ax[X].legend()&lt;/code&gt; (with X being the indicated subplot row or column as shown below)&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;style&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;use&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;seaborn&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="n"&gt;fig&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ax&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;subplots&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;nrows&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ncols&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;sharex&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;sharey&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;False&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;figsize&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;17&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;7&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
@@ -115,4 +115,4 @@
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;&lt;img alt="png" src="output_9_0.png"&gt;&lt;/p&gt;</content><category term="misc"></category></entry></feed>
+&lt;p&gt;&lt;img alt="png" src="images/output_9_0.png"&gt;&lt;/p&gt;</content><category term="misc"></category></entry></feed>
