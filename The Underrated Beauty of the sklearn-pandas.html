@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+
+  <title>The Underrated Beauty of the sklearn-pandas DataFrameMapper, FunctionTransformer, and CategoricalImputer</title>
+
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="origin" />
+  <meta name="generator" content="Pelican" />
+<link href="https://jordan-Milne.github.io/Blog/The Underrated Beauty of the sklearn-pandas.html" rel="canonical" />
+  <!-- Feed -->
+        <link href="https://jordan-Milne.github.io/Blog/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Jordan's Data Science Secrets Full Atom Feed" />
+          <link href="https://jordan-Milne.github.io/Blog/feeds/{slug}.atom.xml" type="application/atom+xml" rel="alternate" title="Jordan's Data Science Secrets Categories Atom Feed" />
+
+  <link href="https://jordan-Milne.github.io/Blog/theme/css/style.css" type="text/css" rel="stylesheet" />
+
+  <!-- Code highlight color scheme -->
+      <link href="https://jordan-Milne.github.io/Blog/theme/css/code_blocks/github.css" rel="stylesheet">
+
+
+  <!-- Custom fonts -->
+  <link href='https://fonts.googleapis.com/css?family=Montserrat:400,300' rel='stylesheet' type='text/css' />
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css" />
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+
+
+    <meta name="description" content="The Underrated Beauty of the sklearn-pandas DataFrameMapper, FunctionTransformer, and CategoricalImputer In this blog I will show how to...">
+
+    <meta name="author" content="Jordan Milne">
+
+
+
+
+
+<!-- Open Graph -->
+<meta property="og:site_name" content="Jordan's Data Science Secrets"/>
+<meta property="og:title" content="The Underrated Beauty of the sklearn-pandas DataFrameMapper, FunctionTransformer, and CategoricalImputer"/>
+<meta property="og:description" content="The Underrated Beauty of the sklearn-pandas DataFrameMapper, FunctionTransformer, and CategoricalImputer In this blog I will show how to..."/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="https://jordan-Milne.github.io/Blog/The Underrated Beauty of the sklearn-pandas.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2020-01-20 11:35:00-05:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="https://jordan-Milne.github.io/Blog/author/jordan-milne.html">
+<meta property="article:section" content="misc"/>
+<meta property="og:image" content="https://media.npr.org/assets/img/2019/11/15/giant-panda-bei-bei-20180608-051skipbrown-_wide-5621060ac353db3650a31d9b8cb078bbbfccd9e5-s800-c85.png">
+
+<!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@J0rdans_secrets">
+    <meta name="twitter:title" content="The Underrated Beauty of the sklearn-pandas DataFrameMapper, FunctionTransformer, and CategoricalImputer">
+    <meta name="twitter:url" content="https://jordan-Milne.github.io/Blog/The Underrated Beauty of the sklearn-pandas.html">
+
+        <meta name="twitter:image:src" content="https://media.npr.org/assets/img/2019/11/15/giant-panda-bei-bei-20180608-051skipbrown-_wide-5621060ac353db3650a31d9b8cb078bbbfccd9e5-s800-c85.png">
+
+      <meta name="twitter:description" content="The Underrated Beauty of the sklearn-pandas DataFrameMapper, FunctionTransformer, and CategoricalImputer In this blog I will show how to...">
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "name": "The Underrated Beauty of the sklearn-pandas DataFrameMapper, FunctionTransformer, and CategoricalImputer",
+  "headline": "The Underrated Beauty of the sklearn-pandas DataFrameMapper, FunctionTransformer, and CategoricalImputer",
+  "datePublished": "2020-01-20 11:35:00-05:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "Jordan Milne",
+    "url": "https://jordan-Milne.github.io/Blog/author/jordan-milne.html"
+  },
+  "image": "https://media.npr.org/assets/img/2019/11/15/giant-panda-bei-bei-20180608-051skipbrown-_wide-5621060ac353db3650a31d9b8cb078bbbfccd9e5-s800-c85.png",
+  "url": "https://jordan-Milne.github.io/Blog/The Underrated Beauty of the sklearn-pandas.html",
+  "description": "The Underrated Beauty of the sklearn-pandas DataFrameMapper, FunctionTransformer, and CategoricalImputer In this blog I will show how to..."
+}
+</script>
+</head>
+<!-- TODO : Body class -->
+<body class="home-template">
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+
+
+    </ul>
+  </div>
+</nav>
+    <!-- Progressbar -->
+    <div class="progress-container">
+        <span class="progress-bar"></span>
+    </div>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header id="post-header" class="has-cover">
+      <div class="inner">
+        <nav id="navigation">
+            <span id="home-button" class="nav-button">
+                <a class="home-button" href="https://jordan-Milne.github.io/Blog/" title="Home"><i class="ic ic-arrow-left"></i> Home</a>
+            </span>
+          <span id="menu-button" class="nav-button">
+            <a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
+          </span>
+        </nav>
+        <h1 class="post-title">The Underrated Beauty of the sklearn-pandas DataFrameMapper, FunctionTransformer, and CategoricalImputer</h1>
+        <!-- TODO : Proper class for headline -->
+        <span class="post-meta">
+                <a href="https://jordan-Milne.github.io/Blog/author/jordan-milne.html">Jordan Milne</a>
+            | <time datetime="Mon 20 January 2020">Mon 20 January 2020</time>
+        </span>
+        <!-- TODO : Modified check -->
+            <div class="post-cover cover" style="background-image: url('https://media.npr.org/assets/img/2019/11/15/giant-panda-bei-bei-20180608-051skipbrown-_wide-5621060ac353db3650a31d9b8cb078bbbfccd9e5-s800-c85.png')">
+      </div>
+    </header>
+
+  <section id="wrapper">
+    <a class="hidden-close"></a>
+
+    <!-- Post content -->
+    <main class="content" role="main">
+        <article class="post">
+        <div class="inner">
+            <section class="post-content">
+                <h1>The Underrated Beauty of the sklearn-pandas DataFrameMapper, FunctionTransformer, and CategoricalImputer</h1>
+<h3>In this blog I will show how to improve your preprocessing workflow using some tools from the powerfull sklearn-pandas package which can be seemlessly intergrated with tools from sklearn and pandas (hence the name).</h3>
+<p>First import our required libraries <a href="https://github.com/scikit-learn-contrib/sklearn-pandas">sklearn-pandas</a> and  Netlfix dataset from kaggle. Three examples will be used to show the interesting features from sklearn-pandas.</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">sklearn_pandas</span> <span class="kn">import</span> <span class="n">DataFrameMapper</span><span class="p">,</span> <span class="n">CategoricalImputer</span><span class="p">,</span> <span class="n">FunctionTransformer</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span><span class="p">,</span> <span class="n">LabelBinarizer</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;movies.csv&#39;</span><span class="p">)</span>
+<span class="n">df</span>
+</pre></div>
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>title</th>
+      <th>country</th>
+      <th>release_year</th>
+      <th>rating</th>
+      <th>duration</th>
+      <th>listed_in</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>Rivaaz</td>
+      <td>India</td>
+      <td>2011</td>
+      <td>TV-PG</td>
+      <td>107 min</td>
+      <td>Dramas, Independent Movies, International Movies</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>American Experience: Ruby Ridge</td>
+      <td>United States</td>
+      <td>2017</td>
+      <td>TV-MA</td>
+      <td>53 min</td>
+      <td>Documentaries</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Mumbai Matinee</td>
+      <td>India</td>
+      <td>2003</td>
+      <td>TV-MA</td>
+      <td>116 min</td>
+      <td>Comedies, International Movies, Romantic Movies</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Maya Angelou: And Still I Rise</td>
+      <td>United States</td>
+      <td>2016</td>
+      <td>TV-PG</td>
+      <td>114 min</td>
+      <td>Documentaries</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Famous in Ahmedabad</td>
+      <td>India</td>
+      <td>2015</td>
+      <td>NaN</td>
+      <td>29 min</td>
+      <td>Documentaries, International Movies</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h2>DataFrameMapper</h2>
+<p>The DataFrameMapper is a tool for mapping pandas data frame columns using sklearn transformations. The mapper takes a list of tuples in which first tuple element is a column name from the pandas DataFrameand the second element is an object which will perform the transformation applied to that column, as shown below. Only columns in the mapper will be passed through, for example, <code>df</code> above has a column <code>'country</code> that I did not include in my mapper and it will not be in the output data frame. Another interesting feature is that you can apply multiple transformations onto a column as seen for the <code>'duration'</code> column below.</p>
+<p><code>mapper = DataFrameMapper([
+    (['duration'], [FunctionTransformer(remove_words), StandardScaler()]),
+    ('title', LabelBinarizer()),
+    ('rating', [CategoricalImputer(), LabelBinarizer()]),
+], df_out=True)</code></p>
+<p>An important note is that shape of an array matters for some transformers (StandardScaler). Adding square brackets <code>[]</code>, changes the array from 1 dimensional to a 2-dimensional array with one column, i.e. a column vector.</p>
+<h3>FunctionTransformer</h3>
+<p>Now making custom functions is extremely important but takes some practice. Let's start by making a line of code that will remove the ' min' part from the duration column, then we will put it in a function. 
+1. <code>df['duration'].str.split(' ')</code> will give an output like <code>[90, min]</code> for each column
+2. <code>df['duration'].str.split(' ').str[0]</code> will just give the <code>90</code> for each column... however it it is <code>dtype: object</code>
+3. Finally <code>df['duration'].str.split(' ').str[0].astype(float)</code> gives us <code>90.0</code> for each column which is exactly what we want</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">remove_words</span><span class="p">(</span><span class="n">column</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">column</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+</pre></div>
+
+
+<p>So now we have a function that takes a column and can remove the ' min' part. Unfortunately, when we plug this into the FunctionTransformer in the DataFrameMapper it gives an error upon transformation. The following steps will outline how to get the function into an acceptable state:</p>
+<ol>
+<li>
+<p>If the function is passed as is - <code>df[column].str.split(' ').str[0].astype(float)</code> the error will be <code>'KeyError: 'duration: 75 min'</code>. This is because the transformer works with numpy arrays instead of series or DataFrames</p>
+</li>
+<li>
+<p>Removing df and the now unnecessary <code>.str</code>s and turning it to an array gives us an end product that looks like - <code>np.array(column.split(' ')[0]).astype(float)</code> which can be successfully passed through the FunctionTransformer</p>
+</li>
+</ol>
+<h3>CategoricalImputer</h3>
+<p>Another powerfull tool from sklearn-pandas is the <code>CategoricalImputer</code>. Unfortunately, the scikit-learn Imputer transformer only works with numbers. However, the sklearn-pandas <code>CategoricalImputer</code> works with strings, substituting null values with the most frequent or specified values.</p>
+<h2>Putting it All Together</h2>
+<div class="highlight"><pre><span></span><span class="c1"># Train-Test Split</span>
+<span class="n">target</span> <span class="o">=</span> <span class="s1">&#39;listed_in&#39;</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">target</span><span class="p">]</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="c1"># Make the mapper</span>
+<span class="n">mapper</span> <span class="o">=</span> <span class="n">DataFrameMapper</span><span class="p">([</span>
+    <span class="p">([</span><span class="s1">&#39;duration&#39;</span><span class="p">],</span> <span class="p">[</span><span class="n">FunctionTransformer</span><span class="p">(</span><span class="n">remove_words</span><span class="p">),</span> <span class="n">StandardScaler</span><span class="p">()]),</span>
+    <span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="n">LabelBinarizer</span><span class="p">()),</span>
+    <span class="p">(</span><span class="s1">&#39;rating&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">CategoricalImputer</span><span class="p">(),</span> <span class="n">LabelBinarizer</span><span class="p">()]),</span>
+<span class="p">],</span> <span class="n">df_out</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="c1"># Fit and transform the mapper</span>
+<span class="n">Z_train</span> <span class="o">=</span> <span class="n">mapper</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="n">Z_test</span> <span class="o">=</span> <span class="n">mapper</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="c1"># What the output looks like</span>
+<span class="n">Z_train</span>
+</pre></div>
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>duration</th>
+      <th>title_Maya Angelou: And Still I Rise</th>
+      <th>title_Mumbai Matinee</th>
+      <th>title_Rivaaz</th>
+      <th>rating</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2</td>
+      <td>0.950255</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>0</td>
+      <td>-1.382189</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>0.431934</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+            </section>
+
+            <section class="post-info">
+                <div class="post-share">
+                    <a class="twitter" href="https://twitter.com/share?text=The Underrated Beauty of the sklearn-pandas DataFrameMapper, FunctionTransformer, and CategoricalImputer&amp;url=https://jordan-Milne.github.io/Blog/The Underrated Beauty of the sklearn-pandas.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
+                    </a>
+                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://jordan-Milne.github.io/Blog/The Underrated Beauty of the sklearn-pandas.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
+                    </a>
+                    <a class="googleplus" href="https://plus.google.com/share?url=https://jordan-Milne.github.io/Blog/The Underrated Beauty of the sklearn-pandas.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
+                    </a>
+                    <div class="clear"></div>
+                </div>
+
+
+                <div class="clear"></div>
+
+
+                </section>
+
+
+                <aside class="post-nav">
+                    <div class="clear"></div>
+                </aside>
+
+            </div>
+        </article>
+    </main>
+      <!-- TODO : Body class -->
+    <div id="body-class" style="display: none;" class=""></div>
+
+    <footer id="footer">
+      <div class="inner">
+        <section class="credits">
+
+
+          <span class="credits-theme">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow">Attila</a></span>
+          <span class="credits-software">Published with <a href="https://github.com/getpelican/pelican" rel="nofollow">Pelican</a></span>
+        </section>
+      </div>
+    </footer>
+  </section>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://jordan-Milne.github.io/Blog/theme/js/script.js"></script>
+
+</body>
+</html>

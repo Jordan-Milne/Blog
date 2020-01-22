@@ -1,5 +1,209 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Jordan's Data Science Secrets</title><link href="https://jordan-Milne.github.io/Blog/" rel="alternate"></link><link href="https://jordan-Milne.github.io/Blog/feeds/all.atom.xml" rel="self"></link><id>https://jordan-Milne.github.io/Blog/</id><updated>2019-12-30T11:35:00-05:00</updated><entry><title>Python Fireworks</title><link href="https://jordan-Milne.github.io/Blog/blog2.html" rel="alternate"></link><published>2019-12-30T11:35:00-05:00</published><updated>2019-12-30T11:35:00-05:00</updated><author><name>Jordan Milne</name></author><id>tag:jordan-milne.github.io,2019-12-30:/Blog/blog2.html</id><summary type="html">&lt;h3&gt;How to Make Fireworks in Python&lt;/h3&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Jordan's Data Science Secrets</title><link href="https://jordan-Milne.github.io/Blog/" rel="alternate"></link><link href="https://jordan-Milne.github.io/Blog/feeds/all.atom.xml" rel="self"></link><id>https://jordan-Milne.github.io/Blog/</id><updated>2020-01-20T11:35:00-05:00</updated><entry><title>The Underrated Beauty of the sklearn-pandas DataFrameMapper, FunctionTransformer, and CategoricalImputer</title><link href="https://jordan-Milne.github.io/Blog/The%20Underrated%20Beauty%20of%20the%20sklearn-pandas.html" rel="alternate"></link><published>2020-01-20T11:35:00-05:00</published><updated>2020-01-20T11:35:00-05:00</updated><author><name>Jordan Milne</name></author><id>tag:jordan-milne.github.io,2020-01-20:/Blog/The Underrated Beauty of the sklearn-pandas.html</id><summary type="html">&lt;h1&gt;The Underrated Beauty of the sklearn-pandas DataFrameMapper, FunctionTransformer, and CategoricalImputer&lt;/h1&gt;
+&lt;h3&gt;In this blog I will show how to improve your preprocessing workflow using some tools from the powerfull sklearn-pandas package which can be seemlessly intergrated with tools from sklearn and pandas (hence the name).&lt;/h3&gt;
+&lt;p&gt;First import our required libraries &lt;a href="https://github.com/scikit-learn-contrib/sklearn-pandas"&gt;sklearn-pandas …&lt;/a&gt;&lt;/p&gt;</summary><content type="html">&lt;h1&gt;The Underrated Beauty of the sklearn-pandas DataFrameMapper, FunctionTransformer, and CategoricalImputer&lt;/h1&gt;
+&lt;h3&gt;In this blog I will show how to improve your preprocessing workflow using some tools from the powerfull sklearn-pandas package which can be seemlessly intergrated with tools from sklearn and pandas (hence the name).&lt;/h3&gt;
+&lt;p&gt;First import our required libraries &lt;a href="https://github.com/scikit-learn-contrib/sklearn-pandas"&gt;sklearn-pandas&lt;/a&gt; and  Netlfix dataset from kaggle. Three examples will be used to show the interesting features from sklearn-pandas.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;pandas&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;pd&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sklearn_pandas&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;DataFrameMapper&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;CategoricalImputer&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;FunctionTransformer&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sklearn.model_selection&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;train_test_split&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sklearn.preprocessing&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;StandardScaler&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;LabelBinarizer&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;numpy&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;np&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read_csv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;movies.csv&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;df&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;div&gt;
+&lt;style scoped&gt;
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+&lt;/style&gt;
+&lt;table border="1" class="dataframe"&gt;
+  &lt;thead&gt;
+    &lt;tr style="text-align: right;"&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;title&lt;/th&gt;
+      &lt;th&gt;country&lt;/th&gt;
+      &lt;th&gt;release_year&lt;/th&gt;
+      &lt;th&gt;rating&lt;/th&gt;
+      &lt;th&gt;duration&lt;/th&gt;
+      &lt;th&gt;listed_in&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;Rivaaz&lt;/td&gt;
+      &lt;td&gt;India&lt;/td&gt;
+      &lt;td&gt;2011&lt;/td&gt;
+      &lt;td&gt;TV-PG&lt;/td&gt;
+      &lt;td&gt;107 min&lt;/td&gt;
+      &lt;td&gt;Dramas, Independent Movies, International Movies&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;American Experience: Ruby Ridge&lt;/td&gt;
+      &lt;td&gt;United States&lt;/td&gt;
+      &lt;td&gt;2017&lt;/td&gt;
+      &lt;td&gt;TV-MA&lt;/td&gt;
+      &lt;td&gt;53 min&lt;/td&gt;
+      &lt;td&gt;Documentaries&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;Mumbai Matinee&lt;/td&gt;
+      &lt;td&gt;India&lt;/td&gt;
+      &lt;td&gt;2003&lt;/td&gt;
+      &lt;td&gt;TV-MA&lt;/td&gt;
+      &lt;td&gt;116 min&lt;/td&gt;
+      &lt;td&gt;Comedies, International Movies, Romantic Movies&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;Maya Angelou: And Still I Rise&lt;/td&gt;
+      &lt;td&gt;United States&lt;/td&gt;
+      &lt;td&gt;2016&lt;/td&gt;
+      &lt;td&gt;TV-PG&lt;/td&gt;
+      &lt;td&gt;114 min&lt;/td&gt;
+      &lt;td&gt;Documentaries&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;Famous in Ahmedabad&lt;/td&gt;
+      &lt;td&gt;India&lt;/td&gt;
+      &lt;td&gt;2015&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;29 min&lt;/td&gt;
+      &lt;td&gt;Documentaries, International Movies&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+
+&lt;h2&gt;DataFrameMapper&lt;/h2&gt;
+&lt;p&gt;The DataFrameMapper is a tool for mapping pandas data frame columns using sklearn transformations. The mapper takes a list of tuples in which first tuple element is a column name from the pandas DataFrameand the second element is an object which will perform the transformation applied to that column, as shown below. Only columns in the mapper will be passed through, for example, &lt;code&gt;df&lt;/code&gt; above has a column &lt;code&gt;'country&lt;/code&gt; that I did not include in my mapper and it will not be in the output data frame. Another interesting feature is that you can apply multiple transformations onto a column as seen for the &lt;code&gt;'duration'&lt;/code&gt; column below.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;mapper = DataFrameMapper([
+    (['duration'], [FunctionTransformer(remove_words), StandardScaler()]),
+    ('title', LabelBinarizer()),
+    ('rating', [CategoricalImputer(), LabelBinarizer()]),
+], df_out=True)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;An important note is that shape of an array matters for some transformers (StandardScaler). Adding square brackets &lt;code&gt;[]&lt;/code&gt;, changes the array from 1 dimensional to a 2-dimensional array with one column, i.e. a column vector.&lt;/p&gt;
+&lt;h3&gt;FunctionTransformer&lt;/h3&gt;
+&lt;p&gt;Now making custom functions is extremely important but takes some practice. Let's start by making a line of code that will remove the ' min' part from the duration column, then we will put it in a function. 
+1. &lt;code&gt;df['duration'].str.split(' ')&lt;/code&gt; will give an output like &lt;code&gt;[90, min]&lt;/code&gt; for each column
+2. &lt;code&gt;df['duration'].str.split(' ').str[0]&lt;/code&gt; will just give the &lt;code&gt;90&lt;/code&gt; for each column... however it it is &lt;code&gt;dtype: object&lt;/code&gt;
+3. Finally &lt;code&gt;df['duration'].str.split(' ').str[0].astype(float)&lt;/code&gt; gives us &lt;code&gt;90.0&lt;/code&gt; for each column which is exactly what we want&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;remove_words&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;column&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;array&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;column&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39; &amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;astype&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;float&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;So now we have a function that takes a column and can remove the ' min' part. Unfortunately, when we plug this into the FunctionTransformer in the DataFrameMapper it gives an error upon transformation. The following steps will outline how to get the function into an acceptable state:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;If the function is passed as is - &lt;code&gt;df[column].str.split(' ').str[0].astype(float)&lt;/code&gt; the error will be &lt;code&gt;'KeyError: 'duration: 75 min'&lt;/code&gt;. This is because the transformer works with numpy arrays instead of series or DataFrames&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Removing df and the now unnecessary &lt;code&gt;.str&lt;/code&gt;s and turning it to an array gives us an end product that looks like - &lt;code&gt;np.array(column.split(' ')[0]).astype(float)&lt;/code&gt; which can be successfully passed through the FunctionTransformer&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;CategoricalImputer&lt;/h3&gt;
+&lt;p&gt;Another powerfull tool from sklearn-pandas is the &lt;code&gt;CategoricalImputer&lt;/code&gt;. Unfortunately, the scikit-learn Imputer transformer only works with numbers. However, the sklearn-pandas &lt;code&gt;CategoricalImputer&lt;/code&gt; works with strings, substituting null values with the most frequent or specified values.&lt;/p&gt;
+&lt;h2&gt;Putting it All Together&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# Train-Test Split&lt;/span&gt;
+&lt;span class="n"&gt;target&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;listed_in&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;target&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;X&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;drop&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;target&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;axis&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;X_train&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;X_test&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y_train&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y_test&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;train_test_split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;X&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;random_state&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;42&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# Make the mapper&lt;/span&gt;
+&lt;span class="n"&gt;mapper&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;DataFrameMapper&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;
+    &lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;duration&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;FunctionTransformer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;remove_words&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;StandardScaler&lt;/span&gt;&lt;span class="p"&gt;()]),&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;title&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;LabelBinarizer&lt;/span&gt;&lt;span class="p"&gt;()),&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;rating&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;CategoricalImputer&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt; &lt;span class="n"&gt;LabelBinarizer&lt;/span&gt;&lt;span class="p"&gt;()]),&lt;/span&gt;
+&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;df_out&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# Fit and transform the mapper&lt;/span&gt;
+&lt;span class="n"&gt;Z_train&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;mapper&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fit_transform&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;X_train&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;Z_test&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;mapper&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;transform&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;X_test&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# What the output looks like&lt;/span&gt;
+&lt;span class="n"&gt;Z_train&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;div&gt;
+&lt;style scoped&gt;
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+&lt;/style&gt;
+&lt;table border="1" class="dataframe"&gt;
+  &lt;thead&gt;
+    &lt;tr style="text-align: right;"&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;duration&lt;/th&gt;
+      &lt;th&gt;title_Maya Angelou: And Still I Rise&lt;/th&gt;
+      &lt;th&gt;title_Mumbai Matinee&lt;/th&gt;
+      &lt;th&gt;title_Rivaaz&lt;/th&gt;
+      &lt;th&gt;rating&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;0.950255&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;-1.382189&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;0.431934&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;</content><category term="misc"></category></entry><entry><title>Python Fireworks</title><link href="https://jordan-Milne.github.io/Blog/blog2.html" rel="alternate"></link><published>2019-12-30T11:35:00-05:00</published><updated>2019-12-30T11:35:00-05:00</updated><author><name>Jordan Milne</name></author><id>tag:jordan-milne.github.io,2019-12-30:/Blog/blog2.html</id><summary type="html">&lt;h3&gt;How to Make Fireworks in Python&lt;/h3&gt;
 &lt;p&gt;I used Turtle, from the python standard library to make art that resembles fireworks. I created a series of multiple concentric circles with random initial and final radius as well as random widths for each circle.&lt;/p&gt;
 &lt;p&gt;&lt;img alt="" src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.stack.imgur.com%2FSzOrn.png&amp;amp;f=1&amp;amp;nofb=1"&gt;&lt;/p&gt;
 &lt;p&gt;first step was to import turtle which is …&lt;/p&gt;</summary><content type="html">&lt;h3&gt;How to Make Fireworks in Python&lt;/h3&gt;
