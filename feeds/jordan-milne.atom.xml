@@ -1,5 +1,278 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Jordan's Data Science Secrets - Jordan Milne</title><link href="https://jordan-Milne.github.io/Blog/" rel="alternate"></link><link href="https://jordan-Milne.github.io/Blog/feeds/jordan-milne.atom.xml" rel="self"></link><id>https://jordan-Milne.github.io/Blog/</id><updated>2020-01-20T11:35:00-05:00</updated><entry><title>Modern Functional Programming: Coconut</title><link href="https://jordan-Milne.github.io/Blog/Functional%20Programming%20with%20Coconut.html" rel="alternate"></link><published>2020-01-20T11:35:00-05:00</published><updated>2020-01-20T11:35:00-05:00</updated><author><name>Jordan Milne</name></author><id>tag:jordan-milne.github.io,2020-01-20:/Blog/Functional Programming with Coconut.html</id><summary type="html">&lt;h1&gt;Functional Programming with Coconut&lt;/h1&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Jordan's Data Science Secrets - Jordan Milne</title><link href="https://jordan-Milne.github.io/Blog/" rel="alternate"></link><link href="https://jordan-Milne.github.io/Blog/feeds/jordan-milne.atom.xml" rel="self"></link><id>https://jordan-Milne.github.io/Blog/</id><updated>2020-01-31T11:35:00-05:00</updated><entry><title>Battle of the Stats: Sheldon Keefe vs Mike Babcock</title><link href="https://jordan-Milne.github.io/Blog/Sheldon%20Keefe%20vs%20Mike%20Babcock.html" rel="alternate"></link><published>2020-01-31T11:35:00-05:00</published><updated>2020-01-31T11:35:00-05:00</updated><author><name>Jordan Milne</name></author><id>tag:jordan-milne.github.io,2020-01-31:/Blog/Sheldon Keefe vs Mike Babcock.html</id><summary type="html">&lt;h1&gt;Battle of the Stats: Sheldon Keefe vs Mike Babcock&lt;/h1&gt;
+&lt;h2&gt;In Sheldon Keefe’s coaching first 20 games he had a league-best 15-4-1 record that equated to a 127-point pace for the season.&lt;/h2&gt;
+&lt;p&gt;In this blog I use bayesian statistics and pymc3 to get answers about the Leafs performance under the …&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Battle of the Stats: Sheldon Keefe vs Mike Babcock&lt;/h1&gt;
+&lt;h2&gt;In Sheldon Keefe’s coaching first 20 games he had a league-best 15-4-1 record that equated to a 127-point pace for the season.&lt;/h2&gt;
+&lt;p&gt;In this blog I use bayesian statistics and pymc3 to get answers about the Leafs performance under the two coaches.
+https://www.thesportsgeek.com/wp-content/uploads/2019/11/Maple-leafs-coach-825x400.jpg&lt;/p&gt;
+&lt;p&gt;https://nbviewer.jupyter.org/github/CamDavidsonPilon/Probabilistic-Programming-and-Bayesian-Methods-for-Hackers/blob/master/Chapter1_Introduction/Ch1_Introduction_PyMC3.ipynb&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;pandas&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;pd&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sklearn.preprocessing&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;LabelEncoder&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;matplotlib.pyplot&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;plt&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;numpy&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;np&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;datetime&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;dt&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;arviz&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;az&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;IPython.core.pylabtools&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;figsize&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;scipy.stats&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;stats&lt;/span&gt;
+
+&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;matplotlib&lt;/span&gt; &lt;span class="n"&gt;inline&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Here I read in a csv I created from webscrapping Auston Matthews 'Time on Ice' and the Toronto Maple Leafs total goals per game.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read_csv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;matthews.csv&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;style&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;use&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;seaborn&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;fig&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ax&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;subplots&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;nrows&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ncols&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;sharex&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;False&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;sharey&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;False&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;figsize&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;15&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+
+&lt;span class="n"&gt;fig&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;suptitle&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Leafs Performance This Season&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;ax&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;bar&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;game&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;team_goals&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;color&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;orange&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;label&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Team Goals&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;ax&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;bar&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;game&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;matthews_toi&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;color&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;red&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;label&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Matthews TOI&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;ax&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;legend&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;loc&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;upper left&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;ax&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;legend&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;img alt="png" src="output_4_0.png"&gt;&lt;/p&gt;
+&lt;p&gt;We Know that this season Babcock was replaced by Keefe, but using Bayesian statistics we can determine if there was changes in the leafs performance and on what day/game the change starts.&lt;/p&gt;
+&lt;p&gt;Both 'Team Goals' and 'Matthews TOI' can be fit with a &lt;strong&gt;Poisson(λ)&lt;/strong&gt; distribution. Assuming that during the season on day &lt;strong&gt;'tau'&lt;/strong&gt; the parameter &lt;strong&gt;λ&lt;/strong&gt; changes to a higher value, resulting in two λ parameters. This means that there will be a &lt;strong&gt;λ&lt;/strong&gt; for before day &lt;strong&gt;'tau'&lt;/strong&gt; and a &lt;strong&gt;λ&lt;/strong&gt; for after day &lt;strong&gt;'tau'&lt;/strong&gt; resulting in a switchpoint day/game. However, if there is no real difference in the Leafs/Matthews performance then the two &lt;strong&gt;λ&lt;/strong&gt; should be equal.&lt;/p&gt;
+&lt;h3&gt;Auston Matthews Ice Time&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;pymc3&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;pm&lt;/span&gt;
+
+&lt;span class="k"&gt;with&lt;/span&gt; &lt;span class="n"&gt;pm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Model&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;lambda_1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Normal&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;lambda_1&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;19&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;lambda_2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Normal&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;lambda_2&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;19&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;tau&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;DiscreteUniform&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;tau&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;lower&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;upper&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;41&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="n"&gt;idx&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;arange&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="c1"&gt;# Index&lt;/span&gt;
+    &lt;span class="n"&gt;lambda_&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;math&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;switch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;tau&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;idx&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;lambda_1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;lambda_2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="n"&gt;observation&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Poisson&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;obs&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;lambda_&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;observed&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;matthews_toi&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+    &lt;span class="n"&gt;trace&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sample&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;10000&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tune&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1000&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;chains&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;Multiprocess&lt;/span&gt; &lt;span class="nv"&gt;sampling&lt;/span&gt; &lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="nv"&gt;chains&lt;/span&gt; &lt;span class="nv"&gt;in&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="nv"&gt;jobs&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt;
+&lt;span class="nv"&gt;CompoundStep&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="nv"&gt;NUTS&lt;/span&gt;: [&lt;span class="nv"&gt;lambda_2&lt;/span&gt;, &lt;span class="nv"&gt;lambda_1&lt;/span&gt;]
+&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="nv"&gt;Metropolis&lt;/span&gt;: [&lt;span class="nv"&gt;tau&lt;/span&gt;]
+&lt;span class="nv"&gt;Sampling&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="nv"&gt;chains&lt;/span&gt;, &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;divergences&lt;/span&gt;: &lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="o"&gt;%|&lt;/span&gt;██████████&lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="mi"&gt;22000&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mi"&gt;22000&lt;/span&gt; [&lt;span class="mi"&gt;00&lt;/span&gt;:&lt;span class="mi"&gt;11&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="mi"&gt;00&lt;/span&gt;:&lt;span class="mi"&gt;00&lt;/span&gt;, &lt;span class="mi"&gt;1890&lt;/span&gt;.&lt;span class="mi"&gt;00&lt;/span&gt;&lt;span class="nv"&gt;draws&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nv"&gt;s&lt;/span&gt;]
+&lt;span class="nv"&gt;The&lt;/span&gt; &lt;span class="nv"&gt;number&lt;/span&gt; &lt;span class="nv"&gt;of&lt;/span&gt; &lt;span class="nv"&gt;effective&lt;/span&gt; &lt;span class="nv"&gt;samples&lt;/span&gt; &lt;span class="nv"&gt;is&lt;/span&gt; &lt;span class="nv"&gt;smaller&lt;/span&gt; &lt;span class="nv"&gt;than&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="nv"&gt;some&lt;/span&gt; &lt;span class="nv"&gt;parameters&lt;/span&gt;.
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;What we are looking for from PyMC3 is the difference in the two lamdas and what day/game (tau) the changes occured.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;pm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;summary&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;trace&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;div&gt;
+&lt;style scoped&gt;
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+&lt;/style&gt;
+&lt;table border="1" class="dataframe"&gt;
+  &lt;thead&gt;
+    &lt;tr style="text-align: right;"&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;mean&lt;/th&gt;
+      &lt;th&gt;sd&lt;/th&gt;
+      &lt;th&gt;hpd_3%&lt;/th&gt;
+      &lt;th&gt;hpd_97%&lt;/th&gt;
+      &lt;th&gt;mcse_mean&lt;/th&gt;
+      &lt;th&gt;mcse_sd&lt;/th&gt;
+      &lt;th&gt;ess_mean&lt;/th&gt;
+      &lt;th&gt;ess_sd&lt;/th&gt;
+      &lt;th&gt;ess_bulk&lt;/th&gt;
+      &lt;th&gt;ess_tail&lt;/th&gt;
+      &lt;th&gt;r_hat&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;lambda_1&lt;/td&gt;
+      &lt;td&gt;19.148&lt;/td&gt;
+      &lt;td&gt;1.134&lt;/td&gt;
+      &lt;td&gt;16.894&lt;/td&gt;
+      &lt;td&gt;21.225&lt;/td&gt;
+      &lt;td&gt;0.014&lt;/td&gt;
+      &lt;td&gt;0.010&lt;/td&gt;
+      &lt;td&gt;6666.0&lt;/td&gt;
+      &lt;td&gt;6666.0&lt;/td&gt;
+      &lt;td&gt;7745.0&lt;/td&gt;
+      &lt;td&gt;5034.0&lt;/td&gt;
+      &lt;td&gt;1.0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;lambda_2&lt;/td&gt;
+      &lt;td&gt;20.535&lt;/td&gt;
+      &lt;td&gt;1.191&lt;/td&gt;
+      &lt;td&gt;18.476&lt;/td&gt;
+      &lt;td&gt;22.925&lt;/td&gt;
+      &lt;td&gt;0.018&lt;/td&gt;
+      &lt;td&gt;0.013&lt;/td&gt;
+      &lt;td&gt;4292.0&lt;/td&gt;
+      &lt;td&gt;4171.0&lt;/td&gt;
+      &lt;td&gt;4963.0&lt;/td&gt;
+      &lt;td&gt;5521.0&lt;/td&gt;
+      &lt;td&gt;1.0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;tau&lt;/td&gt;
+      &lt;td&gt;24.154&lt;/td&gt;
+      &lt;td&gt;11.620&lt;/td&gt;
+      &lt;td&gt;7.000&lt;/td&gt;
+      &lt;td&gt;41.000&lt;/td&gt;
+      &lt;td&gt;0.281&lt;/td&gt;
+      &lt;td&gt;0.199&lt;/td&gt;
+      &lt;td&gt;1711.0&lt;/td&gt;
+      &lt;td&gt;1711.0&lt;/td&gt;
+      &lt;td&gt;1751.0&lt;/td&gt;
+      &lt;td&gt;3205.0&lt;/td&gt;
+      &lt;td&gt;1.0&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;trace&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;lambda_2&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;trace&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;lambda_1&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;mean&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; 
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;81125&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The Toronto Maple Leafs played 23 games under Mike Babcock so there should be a change on the 24 game if Sheldon Keefe had a significant effect on the team's performance The posterior distributions of the two &lt;strong&gt;λs&lt;/strong&gt; are  distinc and mean for 'tau' is 24.15, meaning the model actually recocnized that a change ocurred on that game. In addition, by taking the differences between all the &lt;code&gt;lamda_2&lt;/code&gt; and &lt;code&gt;lamda_1&lt;/code&gt; values and getting the mean, the chance that the difference in performance is due to the change on that game can be calculated. This means there s a 81.1% chance the change in coaching is the reason for the increase in Auston Matthews ice time.&lt;/p&gt;
+&lt;h3&gt;Toronto Maple Leafs Goals per Game&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;pymc3&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;pm&lt;/span&gt;
+
+&lt;span class="k"&gt;with&lt;/span&gt; &lt;span class="n"&gt;pm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Model&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;lambda_1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;TruncatedNormal&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;lambda_1&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;lambda_2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;TruncatedNormal&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;lambda_2&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;tau&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;DiscreteUniform&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;tau&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;lower&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;14&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;upper&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;30&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="n"&gt;idx&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;arange&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="c1"&gt;# Index&lt;/span&gt;
+    &lt;span class="n"&gt;lambda_&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;math&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;switch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;tau&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;idx&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;lambda_1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;lambda_2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="n"&gt;observation&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Poisson&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;obs&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;lambda_&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;observed&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;team_goals&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+    &lt;span class="n"&gt;trace&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sample&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;10000&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tune&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1000&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;chains&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;Multiprocess&lt;/span&gt; &lt;span class="nv"&gt;sampling&lt;/span&gt; &lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="nv"&gt;chains&lt;/span&gt; &lt;span class="nv"&gt;in&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="nv"&gt;jobs&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt;
+&lt;span class="nv"&gt;CompoundStep&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="nv"&gt;NUTS&lt;/span&gt;: [&lt;span class="nv"&gt;lambda_2&lt;/span&gt;, &lt;span class="nv"&gt;lambda_1&lt;/span&gt;]
+&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="nv"&gt;Metropolis&lt;/span&gt;: [&lt;span class="nv"&gt;tau&lt;/span&gt;]
+&lt;span class="nv"&gt;Sampling&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="nv"&gt;chains&lt;/span&gt;, &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;divergences&lt;/span&gt;: &lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="o"&gt;%|&lt;/span&gt;██████████&lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="mi"&gt;22000&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mi"&gt;22000&lt;/span&gt; [&lt;span class="mi"&gt;00&lt;/span&gt;:&lt;span class="mi"&gt;11&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="mi"&gt;00&lt;/span&gt;:&lt;span class="mi"&gt;00&lt;/span&gt;, &lt;span class="mi"&gt;1853&lt;/span&gt;.&lt;span class="mi"&gt;81&lt;/span&gt;&lt;span class="nv"&gt;draws&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nv"&gt;s&lt;/span&gt;]
+&lt;span class="nv"&gt;The&lt;/span&gt; &lt;span class="nv"&gt;number&lt;/span&gt; &lt;span class="nv"&gt;of&lt;/span&gt; &lt;span class="nv"&gt;effective&lt;/span&gt; &lt;span class="nv"&gt;samples&lt;/span&gt; &lt;span class="nv"&gt;is&lt;/span&gt; &lt;span class="nv"&gt;smaller&lt;/span&gt; &lt;span class="nv"&gt;than&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="nv"&gt;some&lt;/span&gt; &lt;span class="nv"&gt;parameters&lt;/span&gt;.
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;pm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;summary&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;trace&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;div&gt;
+&lt;style scoped&gt;
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+&lt;/style&gt;
+&lt;table border="1" class="dataframe"&gt;
+  &lt;thead&gt;
+    &lt;tr style="text-align: right;"&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;mean&lt;/th&gt;
+      &lt;th&gt;sd&lt;/th&gt;
+      &lt;th&gt;hpd_3%&lt;/th&gt;
+      &lt;th&gt;hpd_97%&lt;/th&gt;
+      &lt;th&gt;mcse_mean&lt;/th&gt;
+      &lt;th&gt;mcse_sd&lt;/th&gt;
+      &lt;th&gt;ess_mean&lt;/th&gt;
+      &lt;th&gt;ess_sd&lt;/th&gt;
+      &lt;th&gt;ess_bulk&lt;/th&gt;
+      &lt;th&gt;ess_tail&lt;/th&gt;
+      &lt;th&gt;r_hat&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;lambda_1&lt;/td&gt;
+      &lt;td&gt;3.326&lt;/td&gt;
+      &lt;td&gt;0.415&lt;/td&gt;
+      &lt;td&gt;2.568&lt;/td&gt;
+      &lt;td&gt;4.116&lt;/td&gt;
+      &lt;td&gt;0.005&lt;/td&gt;
+      &lt;td&gt;0.004&lt;/td&gt;
+      &lt;td&gt;6848.0&lt;/td&gt;
+      &lt;td&gt;6335.0&lt;/td&gt;
+      &lt;td&gt;7527.0&lt;/td&gt;
+      &lt;td&gt;6197.0&lt;/td&gt;
+      &lt;td&gt;1.0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;lambda_2&lt;/td&gt;
+      &lt;td&gt;3.963&lt;/td&gt;
+      &lt;td&gt;0.456&lt;/td&gt;
+      &lt;td&gt;3.156&lt;/td&gt;
+      &lt;td&gt;4.838&lt;/td&gt;
+      &lt;td&gt;0.006&lt;/td&gt;
+      &lt;td&gt;0.004&lt;/td&gt;
+      &lt;td&gt;5320.0&lt;/td&gt;
+      &lt;td&gt;5320.0&lt;/td&gt;
+      &lt;td&gt;5373.0&lt;/td&gt;
+      &lt;td&gt;9373.0&lt;/td&gt;
+      &lt;td&gt;1.0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;tau&lt;/td&gt;
+      &lt;td&gt;23.921&lt;/td&gt;
+      &lt;td&gt;4.981&lt;/td&gt;
+      &lt;td&gt;15.000&lt;/td&gt;
+      &lt;td&gt;30.000&lt;/td&gt;
+      &lt;td&gt;0.119&lt;/td&gt;
+      &lt;td&gt;0.085&lt;/td&gt;
+      &lt;td&gt;1749.0&lt;/td&gt;
+      &lt;td&gt;1704.0&lt;/td&gt;
+      &lt;td&gt;1631.0&lt;/td&gt;
+      &lt;td&gt;3441.0&lt;/td&gt;
+      &lt;td&gt;1.0&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;trace&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;lambda_2&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;trace&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;lambda_1&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;mean&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;83355&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Using the same proccess as before it can be seen that the 'tau' was found to  is basically 24. In addition, there is a 83.1% chance the change in coaching is the reason for the Maple Leafs scoring more goals.&lt;/p&gt;
+&lt;p&gt;In conclusion, Keefe has made a significant impact in the leafs performance (enough for the model to find it) and I hope he keeps on this path!&lt;/p&gt;</content><category term="misc"></category></entry><entry><title>Modern Functional Programming: Coconut</title><link href="https://jordan-Milne.github.io/Blog/Functional%20Programming%20with%20Coconut.html" rel="alternate"></link><published>2020-01-25T11:35:00-05:00</published><updated>2020-01-25T11:35:00-05:00</updated><author><name>Jordan Milne</name></author><id>tag:jordan-milne.github.io,2020-01-25:/Blog/Functional Programming with Coconut.html</id><summary type="html">&lt;h1&gt;Functional Programming with Coconut&lt;/h1&gt;
 &lt;p&gt;Coconut is a language that was built to be useful for functional programming and piggy-backs off of Python (valid Python code is valid Coconut code). Coconut provides modern functional programmuing tools that are easy to use and very powerful. Coconut does to functional programming what Python …&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Functional Programming with Coconut&lt;/h1&gt;
 &lt;p&gt;Coconut is a language that was built to be useful for functional programming and piggy-backs off of Python (valid Python code is valid Coconut code). Coconut provides modern functional programmuing tools that are easy to use and very powerful. Coconut does to functional programming what Python did to imperative programming&lt;/p&gt;
 &lt;p&gt;We will start simple and print 'hello world!' in Coconut using a pipeline. Coconut takes the string 'hello world!' and with the pipe &lt;code&gt;|&amp;gt;&lt;/code&gt; sends it to the &lt;code&gt;print&lt;/code&gt; function.&lt;/p&gt;
