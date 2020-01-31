@@ -38,7 +38,7 @@
 
 
 
-    <meta name="description" content="Battle of the Stats: Sheldon Keefe vs Mike Babcock In Sheldon Keefe’s coaching first 20 games he had a league-best 15-4-1 record that...">
+    <meta name="description" content="In Sheldon Keefe’s coaching first 20 games he had a league-best 15-4-1 record that equated to a 127-point pace for the season. In this...">
 
     <meta name="author" content="Jordan Milne">
 
@@ -49,7 +49,7 @@
 <!-- Open Graph -->
 <meta property="og:site_name" content="Jordan's Data Science Secrets"/>
 <meta property="og:title" content="Battle of the Stats: Sheldon Keefe vs Mike Babcock"/>
-<meta property="og:description" content="Battle of the Stats: Sheldon Keefe vs Mike Babcock In Sheldon Keefe’s coaching first 20 games he had a league-best 15-4-1 record that..."/>
+<meta property="og:description" content="In Sheldon Keefe’s coaching first 20 games he had a league-best 15-4-1 record that equated to a 127-point pace for the season. In this..."/>
 <meta property="og:locale" content="en_US"/>
 <meta property="og:url" content="https://jordan-Milne.github.io/Blog/Sheldon Keefe vs Mike Babcock.html"/>
 <meta property="og:type" content="article"/>
@@ -67,7 +67,7 @@
 
         <meta name="twitter:image:src" content="https://www.thesportsgeek.com/wp-content/uploads/2019/11/Maple-leafs-coach-825x400.jpg">
 
-      <meta name="twitter:description" content="Battle of the Stats: Sheldon Keefe vs Mike Babcock In Sheldon Keefe’s coaching first 20 games he had a league-best 15-4-1 record that...">
+      <meta name="twitter:description" content="In Sheldon Keefe’s coaching first 20 games he had a league-best 15-4-1 record that equated to a 127-point pace for the season. In this...">
 
 <script type="application/ld+json">
 {
@@ -84,7 +84,7 @@
   },
   "image": "https://www.thesportsgeek.com/wp-content/uploads/2019/11/Maple-leafs-coach-825x400.jpg",
   "url": "https://jordan-Milne.github.io/Blog/Sheldon Keefe vs Mike Babcock.html",
-  "description": "Battle of the Stats: Sheldon Keefe vs Mike Babcock In Sheldon Keefe’s coaching first 20 games he had a league-best 15-4-1 record that..."
+  "description": "In Sheldon Keefe’s coaching first 20 games he had a league-best 15-4-1 record that equated to a 127-point pace for the season. In this..."
 }
 </script>
 </head>
@@ -137,8 +137,7 @@
         <article class="post">
         <div class="inner">
             <section class="post-content">
-                <h1>Battle of the Stats: Sheldon Keefe vs Mike Babcock</h1>
-<h2>In Sheldon Keefe’s coaching first 20 games he had a league-best 15-4-1 record that equated to a 127-point pace for the season.</h2>
+                <h2>In Sheldon Keefe’s coaching first 20 games he had a league-best 15-4-1 record that equated to a 127-point pace for the season.</h2>
 <p>In this blog I use bayesian statistics and pymc3 to get answers about the Leafs performance under the two coaches.
 https://www.thesportsgeek.com/wp-content/uploads/2019/11/Maple-leafs-coach-825x400.jpg</p>
 <p>https://nbviewer.jupyter.org/github/CamDavidsonPilon/Probabilistic-Programming-and-Bayesian-Methods-for-Hackers/blob/master/Chapter1_Introduction/Ch1_Introduction_PyMC3.ipynb</p>
@@ -172,7 +171,7 @@ https://www.thesportsgeek.com/wp-content/uploads/2019/11/Maple-leafs-coach-825x4
 </pre></div>
 
 
-<p><img alt="png" src="output_4_0.png"></p>
+<p><img alt="png" src="images/output_4_0.png"></p>
 <p>We Know that this season Babcock was replaced by Keefe, but using Bayesian statistics we can determine if there was changes in the leafs performance and on what day/game the change starts.</p>
 <p>Both 'Team Goals' and 'Matthews TOI' can be fit with a <strong>Poisson(λ)</strong> distribution. Assuming that during the season on day <strong>'tau'</strong> the parameter <strong>λ</strong> changes to a higher value, resulting in two λ parameters. This means that there will be a <strong>λ</strong> for before day <strong>'tau'</strong> and a <strong>λ</strong> for after day <strong>'tau'</strong> resulting in a switchpoint day/game. However, if there is no real difference in the Leafs/Matthews performance then the two <strong>λ</strong> should be equal.</p>
 <h3>Auston Matthews Ice Time</h3>
