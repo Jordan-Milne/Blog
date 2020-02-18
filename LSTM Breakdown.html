@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+
+  <title>Understanding the Brain of the Long Short-Term Memory Network (LSTM)</title>
+
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="origin" />
+  <meta name="generator" content="Pelican" />
+<link href="https://jordan-Milne.github.io/Blog/LSTM Breakdown.html" rel="canonical" />
+  <!-- Feed -->
+        <link href="https://jordan-Milne.github.io/Blog/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Jordan's Data Science Secrets Full Atom Feed" />
+          <link href="https://jordan-Milne.github.io/Blog/feeds/{slug}.atom.xml" type="application/atom+xml" rel="alternate" title="Jordan's Data Science Secrets Categories Atom Feed" />
+
+  <link href="https://jordan-Milne.github.io/Blog/theme/css/style.css" type="text/css" rel="stylesheet" />
+
+  <!-- Code highlight color scheme -->
+      <link href="https://jordan-Milne.github.io/Blog/theme/css/code_blocks/github.css" rel="stylesheet">
+
+
+  <!-- Custom fonts -->
+  <link href='https://fonts.googleapis.com/css?family=Montserrat:400,300' rel='stylesheet' type='text/css' />
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css" />
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+
+
+    <meta name="description" content="In this blog post I explain why a simple Recurrent Neural Network (RNN) is not the best choice for text generation and give an in depth...">
+
+    <meta name="author" content="Jordan Milne">
+
+
+
+
+
+<!-- Open Graph -->
+<meta property="og:site_name" content="Jordan's Data Science Secrets"/>
+<meta property="og:title" content="Understanding the Brain of the Long Short-Term Memory Network (LSTM)"/>
+<meta property="og:description" content="In this blog post I explain why a simple Recurrent Neural Network (RNN) is not the best choice for text generation and give an in depth..."/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="https://jordan-Milne.github.io/Blog/LSTM Breakdown.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2020-02-15 11:35:00-05:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="https://jordan-Milne.github.io/Blog/author/jordan-milne.html">
+<meta property="article:section" content="misc"/>
+<meta property="og:image" content="https://missinglink.ai/wp-content/uploads/2019/08/A.png">
+
+<!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@J0rdans_secrets">
+    <meta name="twitter:title" content="Understanding the Brain of the Long Short-Term Memory Network (LSTM)">
+    <meta name="twitter:url" content="https://jordan-Milne.github.io/Blog/LSTM Breakdown.html">
+
+        <meta name="twitter:image:src" content="https://missinglink.ai/wp-content/uploads/2019/08/A.png">
+
+      <meta name="twitter:description" content="In this blog post I explain why a simple Recurrent Neural Network (RNN) is not the best choice for text generation and give an in depth...">
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "name": "Understanding the Brain of the Long Short-Term Memory Network (LSTM)",
+  "headline": "Understanding the Brain of the Long Short-Term Memory Network (LSTM)",
+  "datePublished": "2020-02-15 11:35:00-05:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "Jordan Milne",
+    "url": "https://jordan-Milne.github.io/Blog/author/jordan-milne.html"
+  },
+  "image": "https://missinglink.ai/wp-content/uploads/2019/08/A.png",
+  "url": "https://jordan-Milne.github.io/Blog/LSTM Breakdown.html",
+  "description": "In this blog post I explain why a simple Recurrent Neural Network (RNN) is not the best choice for text generation and give an in depth..."
+}
+</script>
+</head>
+<!-- TODO : Body class -->
+<body class="home-template">
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+
+
+    </ul>
+  </div>
+</nav>
+    <!-- Progressbar -->
+    <div class="progress-container">
+        <span class="progress-bar"></span>
+    </div>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header id="post-header" class="has-cover">
+      <div class="inner">
+        <nav id="navigation">
+            <span id="home-button" class="nav-button">
+                <a class="home-button" href="https://jordan-Milne.github.io/Blog/" title="Home"><i class="ic ic-arrow-left"></i> Home</a>
+            </span>
+          <span id="menu-button" class="nav-button">
+            <a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
+          </span>
+        </nav>
+        <h1 class="post-title">Understanding the Brain of the Long Short-Term Memory Network (LSTM)</h1>
+        <!-- TODO : Proper class for headline -->
+        <span class="post-meta">
+                <a href="https://jordan-Milne.github.io/Blog/author/jordan-milne.html">Jordan Milne</a>
+            | <time datetime="Sat 15 February 2020">Sat 15 February 2020</time>
+        </span>
+        <!-- TODO : Modified check -->
+            <div class="post-cover cover" style="background-image: url('https://missinglink.ai/wp-content/uploads/2019/08/A.png')">
+      </div>
+    </header>
+
+  <section id="wrapper">
+    <a class="hidden-close"></a>
+
+    <!-- Post content -->
+    <main class="content" role="main">
+        <article class="post">
+        <div class="inner">
+            <section class="post-content">
+                <h2>In this blog post I explain why a simple Recurrent Neural Network (RNN) is not the best choice for text generation and give an in depth review on how a LSTM network operates.</h2>
+<h2>RNN</h2>
+<p>Unlike a feedforward or sequential neural networks, the outputs of some layers in RNNs are fed back into the inputs of a previous layer. This addition allows for the analysis of sequential data, which is something that the traditional NN is incapable of. Also, traditional NNs are limited to a fixed-length input, whereas the RNN has no such restriction.</p>
+<p>Here is a basic image of a simple Recurrent Neural Network (RNN). Where the state of the neuron (S<sub>t</sub>) is equal to the previous state (S<sub>t-1</sub>) multiplied by the weight W<sub>hh</sub> added to the current input (X<sub>t</sub>) multiplied by the weight for that input (W<sub>t</sub>) all passed through a <code>tanh</code> activation. This results in a formula that looks like this: <strong>S<sub>t</sub> = tanh(S<sub>t-1</sub>W<sub>hh</sub> + X<sub>t</sub>W<sub>t</sub>)</strong></p>
+<p><img src="https://www.researchgate.net/profile/Sachin_Talathi/publication/283761596/figure/fig1/AS:614157342752782@1523437929971/Schematic-diagram-of-a-simple-RNN-network.png" alt="Simple RNN" width="200"/></p>
+<p>Now, the problem with using a simple RNN to generate lines for a seinfled character can be easily explained. If the network is fed these three sentences: <code>Jerry likes Kramer.</code> <code>Kramer hates Elaine.</code> <code>Elaine likes Jerry.</code> It would have a dictionary of the following: <code>Jerry, likes, hates, Kramer, Elaine, .</code> The network would learn that after a name is either <code>likes</code> or <code>.</code> but never another name, which is good. However the network also might output something like<code>Jerry likes Jerry</code>, <code>Jerry likes Elaine likes Kramer.</code>, or <code>Jerry. Kramer. Elaine.</code> which are outputs that do not make sense.</p>
+<h2>LSTM</h2>
+<p>It can be difficult to train standard RNNs to solve problems that require learning long-term temporal dependencies. This is because the gradient of the loss function decays exponentially with time (called the vanishing gradient problem). LSTM networks are a type of RNN that uses special units in addition to standard units. LSTM units include a 'memory cell' that can maintain information in memory for long periods of time. A set of gates is used to control when information enters the memory, when it's output, and when it's forgotten.</p>
+<p><img src="https://media1.giphy.com/media/iB4PoTVka0Xnul7UaC/giphy.gif" alt="Simple RNN" width="500"/></p>
+<p>The solution to this is to add some sort of 'memory' to the network. This was done using an Long Short-Term Memory network (LSTM network). LSTM The layout of LSTM neurons can be intimadingly complex but when broken down peice by peice it is easier to wrap your head around it. In the figure below the black saure with a cross/plus in it simply represents element by element addition of vectors from two matrices of equal length. This is called a pointwise addition or an addition junction. Similarily, the black squares with an 'x', lets call a multiplication junctions, represent element by element multiplication of vectors from two matrices of equal length. </p>
+<p>Now things are going to get more complex. A sigmoid function basically just squishes numbers to have a magnitude between 0 and 1 and tanh squishes numbers to have a magnitude between  -1 and 1 . When a sigmoid function is succeeded by a multiplication junction a 'gate' is created. Gating just describes how the sigmoid function controls the output of the gate by multipling the other input by either a low value (like zero) that would not allow the input through, or a high value (like 1) that would allow the input to go through unchanged.</p>
+<p><img src="https://cdn-images-1.medium.com/max/1000/1*QxwbOkm02adHtj01lymgJg.png" alt="lstm" width="400"/></p>
+<p>Now it is time to put the puzzle together. It is important to note there are basically two main paths in the diagram above. The Top path begins in the upper right corner and has an input of the previous cell state. This top path takes the previous cell state and modifies it with outputs from the bottom path. The bottom path begins at the bottom left corner and has inputs of "current input" (<strong>X<sub>t</sub></strong>) and the "previous hidden state" (<strong>h<sub>t-1</sub></strong>). The bottom path passes the <code>current input</code> and the <code>previous hidden state</code> through three different gates.</p>
+<h3>1. Forget Gate</h3>
+<p>This Gate decides which information shall be kept or thrown away. [<strong>h<sub>t-1</sub></strong> and <strong>X<sub>t</sub></strong>] are passed through the sigmoid function then passed to a multiplication junction with the previous cell state (<strong>C<sub>t-1</sub></strong>) and the output is a modified <strong>C<sub>t-1</sub></strong>.</p>
+<h3>2. Input Gate</h3>
+<p>The input gate takes [<strong>h<sub>t-1</sub></strong> and <strong>X<sub>t</sub></strong>]  which were passed through a sigmoid function and a tanh function in parallel to a multiplication junction. The ouput of the multiplication junction at the input gate is then passed though an addition junction with the modified <strong>C<sub>t-1</sub></strong> from the forget gate - resulting in the <strong>current state</strong> of the cell (<strong>C<sub>t</sub></strong>).</p>
+<h3>3. Output Gate</h3>
+<p>The output gate passes [<strong>h<sub>t-1</sub></strong> and <strong>X<sub>t</sub></strong>] through a sigmoid function where it goes through a multiplication junction with the current state of the cell (<strong>C<sub>t</sub></strong>) that just came out of a tanh function producing the hidden state of the cell.</p>
+<p>Watch the (pretty long) gif below to visualize what is going on!</p>
+<p><img alt="images/lstm.gif" src="attachment:lstm.gif"></p>
+<h4>In conclusion, LSTM netwroks are high powered RNNs that have a better 'memory'. LSTM networks also have application other than text generation such as: time series prediction, speech recognition, music composition, grammar learning, sign Language Translation.</h4>
+            </section>
+
+            <section class="post-info">
+                <div class="post-share">
+                    <a class="twitter" href="https://twitter.com/share?text=Understanding the Brain of the Long Short-Term Memory Network (LSTM)&amp;url=https://jordan-Milne.github.io/Blog/LSTM Breakdown.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
+                    </a>
+                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://jordan-Milne.github.io/Blog/LSTM Breakdown.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
+                    </a>
+                    <a class="googleplus" href="https://plus.google.com/share?url=https://jordan-Milne.github.io/Blog/LSTM Breakdown.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
+                    </a>
+                    <div class="clear"></div>
+                </div>
+
+
+                <div class="clear"></div>
+
+
+                </section>
+
+
+                <aside class="post-nav">
+                    <div class="clear"></div>
+                </aside>
+
+            </div>
+        </article>
+    </main>
+      <!-- TODO : Body class -->
+    <div id="body-class" style="display: none;" class=""></div>
+
+    <footer id="footer">
+      <div class="inner">
+        <section class="credits">
+
+
+          <span class="credits-theme">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow">Attila</a></span>
+          <span class="credits-software">Published with <a href="https://github.com/getpelican/pelican" rel="nofollow">Pelican</a></span>
+        </section>
+      </div>
+    </footer>
+  </section>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://jordan-Milne.github.io/Blog/theme/js/script.js"></script>
+
+</body>
+</html>
