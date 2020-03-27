@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"><title>Jordan's Data Science Secrets</title><link href="https://jordan-Milne.github.io/Blog/" rel="alternate"></link><link href="https://jordan-Milne.github.io/Blog/feeds/all-en.atom.xml" rel="self"></link><id>https://jordan-Milne.github.io/Blog/</id><updated>2020-03-15T11:35:00-04:00</updated><entry><title>Gradient Bossting: Under The Hood</title><link href="https://jordan-Milne.github.io/Blog/Gradient%20Boosting.html" rel="alternate"></link><published>2020-03-15T11:35:00-04:00</published><updated>2020-03-15T11:35:00-04:00</updated><author><name>Jordan Milne</name></author><id>tag:jordan-milne.github.io,2020-03-15:/Blog/Gradient Boosting.html</id><summary type="html">&lt;style&gt;
 img {
-
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
   width: 10px;
 }
 &lt;/style&gt;
 
 &lt;h1&gt;How Gradient Boosting Works&lt;/h1&gt;
-&lt;p&gt;Gradient Boosting is an extremely powerful machine learning algorithm that can handle both regression and classification problems. Gradient Boosting is built of the backs of multiple decision trees, so it is neccearcy to understand decision trees to understand gradient boosting.&lt;/p&gt;
-&lt;h2&gt;Decision Trees&lt;/h2&gt;
-&lt;p&gt;Simply …&lt;/p&gt;</summary><content type="html">&lt;style&gt;
+&lt;p&gt;Gradient Boosting is an extremely powerful machine learning algorithm that can handle both regression and classification problems. Gradient Boosting is built of the backs of multiple decision trees, so it is neccearcy to understand decision trees to …&lt;/p&gt;</summary><content type="html">&lt;style&gt;
 img {
-
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
   width: 10px;
 }
 &lt;/style&gt;
@@ -24,52 +26,50 @@ img {
 &lt;div align="center"&gt;Figure 1&lt;/div&gt;&lt;/p&gt;
 &lt;h3&gt;How Decision Trees Work&lt;/h3&gt;
 &lt;p&gt;If we want to classify if it is a good day to go golfing (the dataset below), how do we decide what the root node should be? First we check how well each column seperates the data based on the target. In the imaginary dataset below, we look at all 303 days and see how outlook seperates 'Play Golf'. The most common method of ranking which column seperates the data the best is by using the Gini impurity. &lt;/p&gt;
-&lt;p&gt;2&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://miro.medium.com/max/415/0*asbVp_8lwEsbfpOv.png"&gt;&lt;img src="https://miro.medium.com/max/415/0*asbVp_8lwEsbfpOv.png" style="width:100px"/&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h3&gt;The Gini Impurity&lt;/h3&gt;
-&lt;p&gt;&lt;img src="https://miro.medium.com/max/415/0*asbVp_8lwEsbfpOv.png" alt="test" style="width:100px"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://miro.medium.com/max/415/0*asbVp_8lwEsbfpOv.png" alt="test" style="width:200px"&gt;&lt;/p&gt;
 &lt;div align="center"&gt;Figure 2&lt;/div&gt;
 
 &lt;p&gt;This can be translated as Gini Impurity = 1 - (probability of yes)&lt;sup&gt;2&lt;/sup&gt; - (probability of no)&lt;sup&gt;2&lt;/sup&gt;&lt;/p&gt;
 &lt;p&gt;For the leaf node on the &lt;strong&gt;left&lt;/strong&gt;:&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://latex.codecogs.com/gif.latex?Gini&amp;space;Impurity&amp;space;=&amp;space;1&amp;space;-&amp;space;\left&amp;space;(\frac{105}{105&amp;plus;39}&amp;space;\right&amp;space;)^{2}&amp;space;-&amp;space;\left&amp;space;(\frac{39}{105&amp;plus;39}&amp;space;\right&amp;space;)^{2}&amp;space;=&amp;space;0.395" title="Gini Impurity = 1 - \left (\frac{105}{105+39} \right )^{2} - \left (\frac{39}{105+39} \right )^{2} = 0.395" style="width:100px"/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://latex.codecogs.com/gif.latex?Gini&amp;space;Impurity&amp;space;=&amp;space;1&amp;space;-&amp;space;\left&amp;space;(\frac{105}{105&amp;plus;39}&amp;space;\right&amp;space;)^{2}&amp;space;-&amp;space;\left&amp;space;(\frac{39}{105&amp;plus;39}&amp;space;\right&amp;space;)^{2}&amp;space;=&amp;space;0.395" title="Gini Impurity = 1 - \left (\frac{105}{105+39} \right )^{2} - \left (\frac{39}{105+39} \right )^{2} = 0.395" style="width:300px"/&gt;&lt;/p&gt;
 &lt;p&gt;For the leaf node on the &lt;strong&gt;right&lt;/strong&gt;:&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://latex.codecogs.com/gif.latex?Gini&amp;space;Impurity&amp;space;=&amp;space;1&amp;space;-&amp;space;\left&amp;space;(\frac{34}{125&amp;plus;34}&amp;space;\right&amp;space;)^{2}&amp;space;-&amp;space;\left&amp;space;(\frac{125}{125&amp;plus;34}&amp;space;\right&amp;space;)^{2}&amp;space;=&amp;space;0.336" title="Gini Impurity = 1 - \left (\frac{34}{125+34} \right )^{2} - \left (\frac{125}{125+34} \right )^{2} = 0.336" style="width:100px"/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://latex.codecogs.com/gif.latex?Gini&amp;space;Impurity&amp;space;=&amp;space;1&amp;space;-&amp;space;\left&amp;space;(\frac{34}{125&amp;plus;34}&amp;space;\right&amp;space;)^{2}&amp;space;-&amp;space;\left&amp;space;(\frac{125}{125&amp;plus;34}&amp;space;\right&amp;space;)^{2}&amp;space;=&amp;space;0.336" title="Gini Impurity = 1 - \left (\frac{34}{125+34} \right )^{2} - \left (\frac{125}{125+34} \right )^{2} = 0.336" style="width:300px"/&gt;&lt;/p&gt;
 &lt;p&gt;Now, we take the weighted average of the leaf node impurities based on amount of datapoints:&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://latex.codecogs.com/gif.latex?\left&amp;space;(\frac{144}{144&amp;plus;159}&amp;space;\right&amp;space;)0.395&amp;space;-&amp;space;\left&amp;space;(\frac{159}{144&amp;plus;159}&amp;space;\right&amp;space;)0.336&amp;space;=&amp;space;0.364" title="\left (\frac{144}{144+159} \right )0.395 - \left (\frac{159}{144+159} \right )0.336 = 0.364" style="width:100px"/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://latex.codecogs.com/gif.latex?\left&amp;space;(\frac{144}{144&amp;plus;159}&amp;space;\right&amp;space;)0.395&amp;space;-&amp;space;\left&amp;space;(\frac{159}{144&amp;plus;159}&amp;space;\right&amp;space;)0.336&amp;space;=&amp;space;0.364" title="\left (\frac{144}{144+159} \right )0.395 - \left (\frac{159}{144+159} \right )0.336 = 0.364" style="width:300px"/&gt;&lt;/p&gt;
 &lt;p&gt;This is done for every column and the one with the &lt;strong&gt;lowest&lt;/strong&gt; impurity will be chosen as the root node! This same idea is used to select the next nodes, and the next, etc.&lt;/p&gt;
 &lt;h2&gt;Gradient Boost (Regression)&lt;/h2&gt;
 &lt;p&gt;This example below on predicting IQ using the the dataset in figure 3 will be used to explain how gradient boosting works for regression.&lt;/p&gt;
-&lt;p&gt;&lt;img src="images/gb2.png" alt="drawing" style="width:100px"/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="images/gb2.png" alt="drawing" style="width:400px"/&gt;&lt;/p&gt;
 &lt;div align="center"&gt;Figure 3&lt;/div&gt;
 
 &lt;h3&gt;Step 1: Gradient Boost first takes the average value of the target column as the initial prediction.&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt; Gradient Boost uses a loss function, &lt;em&gt;L(y&lt;sub&gt;i&lt;/sub&gt;,F(x))&lt;/em&gt; which is equal to 0.5(Observed - Predicted)&lt;sup&gt;2&lt;/sup&gt;&lt;/p&gt;
 &lt;p&gt;Gradient Boost uses the loss function in the following formula to make the initial prediction for each data point:&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://latex.codecogs.com/gif.latex?F_{0}(x)&amp;space;=&amp;space;argmin\sum_{i=1}^{n}L(y_{i},y)" title="F_{0}(x) = argmin\sum_{i=1}^{n}L(y_{i},y)" style="width:100px"/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://latex.codecogs.com/gif.latex?F_{0}(x)&amp;space;=&amp;space;argmin\sum_{i=1}^{n}L(y_{i},y)" title="F_{0}(x) = argmin\sum_{i=1}^{n}L(y_{i},y)" style="width:250px"/&gt;&lt;/p&gt;
 &lt;p&gt;In english this means sum up the loss function of the rows and find the minimum value. This can be done by taking the derivative of each term with respect to the predicted (y&lt;sub&gt;i&lt;/sub&gt;). &lt;/p&gt;
 &lt;p&gt;Working through the first row (using the chain rule) looks like this:&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://latex.codecogs.com/gif.latex?\frac{\mathrm{d}&amp;space;}{\mathrm{d}Predicted}(\frac{1}{2}(88-Predicted))&amp;space;=&amp;space;-(88-Predicted)" title="\frac{\mathrm{d} }{\mathrm{d}Predicted}(\frac{1}{2}(88-Predicted)) = -(88-Predicted)" style="width:100px"/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://latex.codecogs.com/gif.latex?\frac{\mathrm{d}&amp;space;}{\mathrm{d}Predicted}(\frac{1}{2}(88-Predicted))&amp;space;=&amp;space;-(88-Predicted)" title="\frac{\mathrm{d} }{\mathrm{d}Predicted}(\frac{1}{2}(88-Predicted)) = -(88-Predicted)" style="width:300px"/&gt;&lt;/p&gt;
 &lt;p&gt;Now doing this for all 3 rows and setting the sum of the derivates to 0 will allow us to find the minimum value&lt;/p&gt;
 &lt;p&gt;-(88-Predicted))+(-(76-Predicted)) + (-(56-Predicted)) = 0&lt;/p&gt;
 &lt;p&gt;Predicted = &lt;strong&gt;73.3&lt;/strong&gt;&lt;/p&gt;
 &lt;h3&gt;Step 2: Gradient Boost  subtracts the average (intial prediction) from each row's target and stores in the 'Pseudo Residual Columns'&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt; Gradient Boost uses this function to calculate the pseudo residuals: &lt;/p&gt;
-&lt;p&gt;&lt;img src="https://latex.codecogs.com/gif.latex?r_{im}&amp;space;=&amp;space;-\frac{\partial&amp;space;L(y_i,F(x))}{\partial&amp;space;F(x)}" title="r_{im} = -\frac{\partial L(y_i,F(x))}{\partial F(x)}" style="width:70px"/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://latex.codecogs.com/gif.latex?r_{im}&amp;space;=&amp;space;-\frac{\partial&amp;space;L(y_i,F(x))}{\partial&amp;space;F(x)}" title="r_{im} = -\frac{\partial L(y_i,F(x))}{\partial F(x)}" style="width:200px"/&gt;&lt;/p&gt;
 &lt;p&gt;Applying this simple formula to all the rows gives us residuals which are stored in the Pseudo Residual column as seen above.&lt;/p&gt;
 &lt;h3&gt;Step 3: Gradient Boost Builds a decision tree to predict the &lt;strong&gt;pseudo residual&lt;/strong&gt; values.&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt; Gradient Boost builds a decision tree and classifies the pseudo residuals as shown in Figure 3. The value of the leaves is calculated using the following equation: &lt;/p&gt;
-&lt;p&gt;&lt;img src="https://latex.codecogs.com/gif.latex?\gamma_{jm}&amp;space;=&amp;space;argmin\sum_{n}^{i=1}L(y_i,F_m(X_i)&amp;plus;\gamma)" title="\gamma_{jm} = argmin\sum_{n}^{i=1}L(y_i,F_m(X_i)+\gamma)" style="width:100px"/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://latex.codecogs.com/gif.latex?\gamma_{jm}&amp;space;=&amp;space;argmin\sum_{n}^{i=1}L(y_i,F_m(X_i)&amp;plus;\gamma)" title="\gamma_{jm} = argmin\sum_{n}^{i=1}L(y_i,F_m(X_i)+\gamma)" style="width:300px"/&gt;&lt;/p&gt;
 &lt;p&gt;This seemingly complex equation is actually pretty simple and similar to the equation from Step 1. The equation quickly reduces down to just being the average of the values in each leaf. So the value of the left leaf in Figure 4 is (14.7 + 2.7)/2 = 8.7 and just -17.3 for the right leaf.&lt;/p&gt;
 &lt;h3&gt;Step 4: Make a new prediction for each sample by updating &lt;em&gt;F&lt;sub&gt;m&lt;/sub&gt;(x)&lt;/em&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;Details&lt;/strong&gt; Gradient Boost uses the following equation to make a new prediction: &lt;/p&gt;
-&lt;p&gt;&lt;img src="https://latex.codecogs.com/gif.latex?F_{m}(x)&amp;space;=&amp;space;F_{m-1}(x)&amp;space;&amp;plus;&amp;space;\nu\sum_{j=1}^{j}y_iI(x\epsilon&amp;space;R_j)" title="F_{m}(x) = F_{m-1}(x) + \nu\sum_{j=1}^{j}y_iI(x\epsilon R_j)" style="width:100px"/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://latex.codecogs.com/gif.latex?F_{m}(x)&amp;space;=&amp;space;F_{m-1}(x)&amp;space;&amp;plus;&amp;space;\nu\sum_{j=1}^{j}y_iI(x\epsilon&amp;space;R_j)" title="F_{m}(x) = F_{m-1}(x) + \nu\sum_{j=1}^{j}y_iI(x\epsilon R_j)" style="width:300px"/&gt;&lt;/p&gt;
 &lt;p&gt;In english that equation translates to: The new prediction (&lt;em&gt;F&lt;sub&gt;m&lt;/sub&gt;(x)&lt;/em&gt;) is equal to the old prediction (&lt;em&gt;F&lt;sub&gt;m-1&lt;/sub&gt;(x)&lt;/em&gt;) + the learning rate (&lt;em&gt;ν&lt;/em&gt;) multiplied by the pseudo residual (&lt;em&gt;the sumation&lt;/em&gt;). The learning rate is a parameter that can be changed but is a number between 0 and 1.  The learning rate is proven to reduce variance resulting in better predictions.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Using the tree below and a learning rate of 0.1, let's make a prediction for the first row from Fig 3.&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Using the equation above, we get  F&lt;sub&gt;m&lt;/sub&gt;(x) = 73.3 + 0.1(8.7)&lt;/p&gt;
 &lt;p&gt;F&lt;sub&gt;m&lt;/sub&gt;(x) = 74.2&lt;/p&gt;
 &lt;p&gt;Now, the actual value for the first row is actually 88 &lt;em&gt;but&lt;/em&gt; 74.2 is closer than the original prediction of 73.3&lt;/p&gt;
-&lt;p&gt;&lt;img src="images/tree.jpg" alt="tree" style="width:100px"&gt;
+&lt;p&gt;&lt;img src="images/tree.jpg" alt="tree" style="width:300px"&gt;
 &lt;div align="center"&gt;Figure 4&lt;/div&gt;&lt;/p&gt;
 &lt;h3&gt;Step 5: Repeat Steps 2 - 4 with updated predictions for the amount of interations specified!&lt;/h3&gt;
 &lt;p&gt;When broken down into small steps, the complex equations that make up gradient boosting for regression can be easily understood.&lt;/p&gt;</content><category term="misc"></category></entry><entry><title>Understanding the Brain of the Long Short-Term Memory Network (LSTM)</title><link href="https://jordan-Milne.github.io/Blog/LSTM%20Breakdown.html" rel="alternate"></link><published>2020-02-15T11:35:00-05:00</published><updated>2020-02-15T11:35:00-05:00</updated><author><name>Jordan Milne</name></author><id>tag:jordan-milne.github.io,2020-02-15:/Blog/LSTM Breakdown.html</id><summary type="html">&lt;h2&gt;In this blog post I explain why a simple Recurrent Neural Network (RNN) is not the best choice for text generation and give an in depth review on how a LSTM network operates.&lt;/h2&gt;
