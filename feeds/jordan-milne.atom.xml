@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"><title>Jordan's Data Science Secrets - Jordan Milne</title><link href="https://jordan-Milne.github.io/Blog/" rel="alternate"></link><link href="https://jordan-Milne.github.io/Blog/feeds/jordan-milne.atom.xml" rel="self"></link><id>https://jordan-Milne.github.io/Blog/</id><updated>2020-03-15T11:35:00-04:00</updated><entry><title>Gradient Bossting: Under The Hood</title><link href="https://jordan-Milne.github.io/Blog/Gradient%20Boosting.html" rel="alternate"></link><published>2020-03-15T11:35:00-04:00</published><updated>2020-03-15T11:35:00-04:00</updated><author><name>Jordan Milne</name></author><id>tag:jordan-milne.github.io,2020-03-15:/Blog/Gradient Boosting.html</id><summary type="html">&lt;style&gt;
 img {
-
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 &lt;/style&gt;
 
 &lt;p&gt;bb&lt;/p&gt;
 &lt;h1&gt;How Gradient Boosting Works&lt;/h1&gt;
-&lt;p&gt;Gradient Boosting is an extremely powerful machine learning algorithm that can handle both regression and classification problems. Gradient Boosting is built of the backs of multiple decision trees, so it is neccearcy to understand decision trees to understand gradient boosting.&lt;/p&gt;
-&lt;h2&gt;Decision Trees&lt;/h2&gt;
-&lt;p&gt;Simply put …&lt;/p&gt;</summary><content type="html">&lt;style&gt;
+&lt;p&gt;Gradient Boosting is an extremely powerful machine learning algorithm that can handle both regression and classification problems. Gradient Boosting is built of the backs of multiple decision trees, so it is neccearcy to understand decision trees to understand …&lt;/p&gt;</summary><content type="html">&lt;style&gt;
 img {
-
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 &lt;/style&gt;
 
