@@ -6,16 +6,13 @@
 &lt;p&gt;Gradient Boosting is an extremely powerful machine learning algorithm that can handle both regression and classification problems. Gradient Boosting is built of the backs of multiple decision trees, so it is neccearcy to understand decision trees to understand gradient boosting.&lt;/p&gt;
 &lt;h2&gt;Decision Trees&lt;/h2&gt;
 &lt;p&gt;Simply put, a decision tree asks questions, and then classifies the data based on the answers. The node very top of a decision tree is called the &lt;strong&gt;root node&lt;/strong&gt;, the nodes at the very bottom are called &lt;strong&gt;leaf nodes&lt;/strong&gt;, and the nodes in between are called &lt;strong&gt;internal nodes&lt;/strong&gt;.&lt;/p&gt;
-&lt;p&gt;cccc&lt;/p&gt;
-&lt;p&gt;img[test] {
-  width: 10%;
-  border: none;
-  background: none;
-}&lt;/p&gt;
 &lt;p&gt;&lt;img alt="test" src="https://miro.medium.com/max/1700/0*0dN6d8THyImxwPeD.png"&gt;
 &lt;div align="center"&gt;Figure 1&lt;/div&gt;&lt;/p&gt;
 &lt;h3&gt;How Decision Trees Work&lt;/h3&gt;
 &lt;p&gt;If we want to classify if it is a good day to go golfing (the dataset below), how do we decide what the root node should be? First we check how well each column seperates the data based on the target. In the imaginary dataset below, we look at all 303 days and see how outlook seperates 'Play Golf'. The most common method of ranking which column seperates the data the best is by using the Gini impurity. &lt;/p&gt;
+&lt;!-- ![](https://miro.medium.com/max/415/0*asbVp_8lwEsbfpOv.png) --&gt;
+
+&lt;p&gt;&lt;img src="https://miro.medium.com/max/415/0*asbVp_8lwEsbfpOv.png" alt="drawing" width=50/&gt;&lt;/p&gt;
 &lt;h3&gt;The Gini Impurity&lt;/h3&gt;
 &lt;p&gt;&lt;img src="https://miro.medium.com/max/415/0*asbVp_8lwEsbfpOv.png" alt="test" width="100"&gt;&lt;/p&gt;
 &lt;div align="center"&gt;Figure 2&lt;/div&gt;
