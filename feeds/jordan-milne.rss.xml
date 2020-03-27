@@ -16,13 +16,13 @@ img.center30 {
 display: block;
 margin-left: auto;
 margin-right: auto;
- width: 60%;
+ width: 30%;
 }
 img.center40 {
 display: block;
 margin-left: auto;
 margin-right: auto;
- width: 60%;
+ width: 40%;
 }
 &lt;/style&gt;
 

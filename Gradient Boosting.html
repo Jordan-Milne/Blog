@@ -154,13 +154,13 @@ img.center30 {
 display: block;
 margin-left: auto;
 margin-right: auto;
- width: 60%;
+ width: 30%;
 }
 img.center40 {
 display: block;
 margin-left: auto;
 margin-right: auto;
- width: 60%;
+ width: 40%;
 }
 </style>
 
@@ -173,9 +173,8 @@ margin-right: auto;
 <h3>How Decision Trees Work</h3>
 <p>If we want to classify if it is a good day to go golfing (the dataset below), how do we decide what the root node should be? First we check how well each column seperates the data based on the target. In the imaginary dataset below, we look at all 303 days and see how outlook seperates 'Play Golf'. The most common method of ranking which column seperates the data the best is by using the Gini impurity. </p>
 <h3>The Gini Impurity</h3>
-<p><img src="https://miro.medium.com/max/415/0*asbVp_8lwEsbfpOv.png" alt="test" class="center40"></p>
-<div align="center">Figure 2</div>
-
+<p><img src="https://miro.medium.com/max/415/0*asbVp_8lwEsbfpOv.png" alt="test" class="center40">
+<div align="center">Figure 2</div></p>
 <p>This can be translated as Gini Impurity = 1 - (probability of yes)<sup>2</sup> - (probability of no)<sup>2</sup></p>
 <p>For the leaf node on the <strong>left</strong>:</p>
 <p><img src="https://latex.codecogs.com/gif.latex?Gini&space;Impurity&space;=&space;1&space;-&space;\left&space;(\frac{105}{105&plus;39}&space;\right&space;)^{2}&space;-&space;\left&space;(\frac{39}{105&plus;39}&space;\right&space;)^{2}&space;=&space;0.395" title="Gini Impurity = 1 - \left (\frac{105}{105+39} \right )^{2} - \left (\frac{39}{105+39} \right )^{2} = 0.395" class="center60"/></p>
@@ -186,9 +185,8 @@ margin-right: auto;
 <p>This is done for every column and the one with the <strong>lowest</strong> impurity will be chosen as the root node! This same idea is used to select the next nodes, and the next, etc.</p>
 <h2>Gradient Boost (Regression)</h2>
 <p>This example below on predicting IQ using the the dataset in figure 3 will be used to explain how gradient boosting works for regression.</p>
-<p><img src="images/gb2.png" alt="drawing" class="center60"/></p>
-<div align="center">Figure 3</div>
-
+<p><img src="images/gb2.png" alt="drawing" class="center60"/>
+<div align="center">Figure 3</div></p>
 <h3>Step 1: Gradient Boost first takes the average value of the target column as the initial prediction.</h3>
 <p><strong>Details:</strong> Gradient Boost uses a loss function, <em>L(y<sub>i</sub>,F(x))</em> which is equal to 0.5(Observed - Predicted)<sup>2</sup></p>
 <p>Gradient Boost uses the loss function in the following formula to make the initial prediction for each data point:</p>

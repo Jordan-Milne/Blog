@@ -16,13 +16,13 @@ img.center30 {
 display: block;
 margin-left: auto;
 margin-right: auto;
- width: 60%;
+ width: 30%;
 }
 img.center40 {
 display: block;
 margin-left: auto;
 margin-right: auto;
- width: 60%;
+ width: 40%;
 }
 &lt;/style&gt;
 
@@ -44,13 +44,13 @@ img.center30 {
 display: block;
 margin-left: auto;
 margin-right: auto;
- width: 60%;
+ width: 30%;
 }
 img.center40 {
 display: block;
 margin-left: auto;
 margin-right: auto;
- width: 60%;
+ width: 40%;
 }
 &lt;/style&gt;
 
@@ -63,9 +63,8 @@ margin-right: auto;
 &lt;h3&gt;How Decision Trees Work&lt;/h3&gt;
 &lt;p&gt;If we want to classify if it is a good day to go golfing (the dataset below), how do we decide what the root node should be? First we check how well each column seperates the data based on the target. In the imaginary dataset below, we look at all 303 days and see how outlook seperates 'Play Golf'. The most common method of ranking which column seperates the data the best is by using the Gini impurity. &lt;/p&gt;
 &lt;h3&gt;The Gini Impurity&lt;/h3&gt;
-&lt;p&gt;&lt;img src="https://miro.medium.com/max/415/0*asbVp_8lwEsbfpOv.png" alt="test" class="center40"&gt;&lt;/p&gt;
-&lt;div align="center"&gt;Figure 2&lt;/div&gt;
-
+&lt;p&gt;&lt;img src="https://miro.medium.com/max/415/0*asbVp_8lwEsbfpOv.png" alt="test" class="center40"&gt;
+&lt;div align="center"&gt;Figure 2&lt;/div&gt;&lt;/p&gt;
 &lt;p&gt;This can be translated as Gini Impurity = 1 - (probability of yes)&lt;sup&gt;2&lt;/sup&gt; - (probability of no)&lt;sup&gt;2&lt;/sup&gt;&lt;/p&gt;
 &lt;p&gt;For the leaf node on the &lt;strong&gt;left&lt;/strong&gt;:&lt;/p&gt;
 &lt;p&gt;&lt;img src="https://latex.codecogs.com/gif.latex?Gini&amp;space;Impurity&amp;space;=&amp;space;1&amp;space;-&amp;space;\left&amp;space;(\frac{105}{105&amp;plus;39}&amp;space;\right&amp;space;)^{2}&amp;space;-&amp;space;\left&amp;space;(\frac{39}{105&amp;plus;39}&amp;space;\right&amp;space;)^{2}&amp;space;=&amp;space;0.395" title="Gini Impurity = 1 - \left (\frac{105}{105+39} \right )^{2} - \left (\frac{39}{105+39} \right )^{2} = 0.395" class="center60"/&gt;&lt;/p&gt;
@@ -76,9 +75,8 @@ margin-right: auto;
 &lt;p&gt;This is done for every column and the one with the &lt;strong&gt;lowest&lt;/strong&gt; impurity will be chosen as the root node! This same idea is used to select the next nodes, and the next, etc.&lt;/p&gt;
 &lt;h2&gt;Gradient Boost (Regression)&lt;/h2&gt;
 &lt;p&gt;This example below on predicting IQ using the the dataset in figure 3 will be used to explain how gradient boosting works for regression.&lt;/p&gt;
-&lt;p&gt;&lt;img src="images/gb2.png" alt="drawing" class="center60"/&gt;&lt;/p&gt;
-&lt;div align="center"&gt;Figure 3&lt;/div&gt;
-
+&lt;p&gt;&lt;img src="images/gb2.png" alt="drawing" class="center60"/&gt;
+&lt;div align="center"&gt;Figure 3&lt;/div&gt;&lt;/p&gt;
 &lt;h3&gt;Step 1: Gradient Boost first takes the average value of the target column as the initial prediction.&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt; Gradient Boost uses a loss function, &lt;em&gt;L(y&lt;sub&gt;i&lt;/sub&gt;,F(x))&lt;/em&gt; which is equal to 0.5(Observed - Predicted)&lt;sup&gt;2&lt;/sup&gt;&lt;/p&gt;
 &lt;p&gt;Gradient Boost uses the loss function in the following formula to make the initial prediction for each data point:&lt;/p&gt;
