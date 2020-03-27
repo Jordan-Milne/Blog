@@ -10,11 +10,10 @@
 &lt;div align="center"&gt;Figure 1&lt;/div&gt;&lt;/p&gt;
 &lt;h3&gt;How Decision Trees Work&lt;/h3&gt;
 &lt;p&gt;If we want to classify if it is a good day to go golfing (the dataset below), how do we decide what the root node should be? First we check how well each column seperates the data based on the target. In the imaginary dataset below, we look at all 303 days and see how outlook seperates 'Play Golf'. The most common method of ranking which column seperates the data the best is by using the Gini impurity. &lt;/p&gt;
-&lt;p&gt;bboo&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://miro.medium.com/max/415/0*asbVp_8lwEsbfpOv.png" data-canonical-src="https://miro.medium.com/max/415/0*asbVp_8lwEsbfpOv.png" width="40" height="40" /&gt;
-bboo&lt;/p&gt;
-&lt;p&gt;&lt;img alt="tesss" src="https://miro.medium.com/max/415/0*asbVp_8lwEsbfpOv.png =50x50"&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img alt="tress" src="https://miro.medium.com/max/415/0*asbVp_8lwEsbfpOv.png | width=50"&gt;&lt;/p&gt;
+&lt;p&gt;pp&lt;/p&gt;
+&lt;p&gt;&lt;img alt="test image size" class="img-responsive" src="https://miro.medium.com/max/415/0*asbVp_8lwEsbfpOv.png"&gt;
+&lt;img alt="test image size" height="50%" src="https://miro.medium.com/max/415/0*asbVp_8lwEsbfpOv.png" width="50%"&gt;
+&lt;img alt="test image size" height="700px" src="https://miro.medium.com/max/415/0*asbVp_8lwEsbfpOv.png" width="400px"&gt;&lt;/p&gt;
 &lt;h3&gt;The Gini Impurity&lt;/h3&gt;
 &lt;p&gt;&lt;img src="https://miro.medium.com/max/415/0*asbVp_8lwEsbfpOv.png" alt="test" width="100"&gt;&lt;/p&gt;
 &lt;div align="center"&gt;Figure 2&lt;/div&gt;
