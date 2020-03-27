@@ -4,20 +4,20 @@ img {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 10%;
 }
 &lt;/style&gt;
 
+&lt;p&gt;dd&lt;/p&gt;
 &lt;h1&gt;How Gradient Boosting Works&lt;/h1&gt;
-&lt;p&gt;Gradient Boosting is an extremely powerful machine learning algorithm that can handle both regression and classification problems. Gradient Boosting is built of the backs of multiple decision trees, so it is neccearcy to understand decision trees to …&lt;/p&gt;</summary><content type="html">&lt;style&gt;
+&lt;p&gt;Gradient Boosting is an extremely powerful machine learning algorithm that can handle both regression and classification problems. Gradient Boosting is built of the backs of multiple decision trees, so it is neccearcy to understand decision trees to understand …&lt;/p&gt;</summary><content type="html">&lt;style&gt;
 img {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 10%;
 }
 &lt;/style&gt;
 
+&lt;p&gt;dd&lt;/p&gt;
 &lt;h1&gt;How Gradient Boosting Works&lt;/h1&gt;
 &lt;p&gt;Gradient Boosting is an extremely powerful machine learning algorithm that can handle both regression and classification problems. Gradient Boosting is built of the backs of multiple decision trees, so it is neccearcy to understand decision trees to understand gradient boosting.&lt;/p&gt;
 &lt;h2&gt;Decision Trees&lt;/h2&gt;
