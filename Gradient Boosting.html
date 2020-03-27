@@ -38,7 +38,7 @@
 
 
 
-    <meta name="description" content="img { display: block; margin-left: 800px; } bobby How Gradient Boosting Works Gradient Boosting is an extremely powerful machine...">
+    <meta name="description" content="img.center60 { display: block; margin-left: auto; margin-right: auto; width: 60%; } billy How Gradient Boosting Works Gradient Boosting...">
 
     <meta name="author" content="Jordan Milne">
 
@@ -49,7 +49,7 @@
 <!-- Open Graph -->
 <meta property="og:site_name" content="Jordan's Data Science Secrets"/>
 <meta property="og:title" content="Gradient Bossting: Under The Hood"/>
-<meta property="og:description" content="img { display: block; margin-left: 800px; } bobby How Gradient Boosting Works Gradient Boosting is an extremely powerful machine..."/>
+<meta property="og:description" content="img.center60 { display: block; margin-left: auto; margin-right: auto; width: 60%; } billy How Gradient Boosting Works Gradient Boosting..."/>
 <meta property="og:locale" content="en_US"/>
 <meta property="og:url" content="https://jordan-Milne.github.io/Blog/Gradient Boosting.html"/>
 <meta property="og:type" content="article"/>
@@ -67,7 +67,7 @@
 
         <meta name="twitter:image:src" content="https://miro.medium.com/max/990/1*vSq_qbgw1xhR86DFMlMgUQ.jpeg">
 
-      <meta name="twitter:description" content="img { display: block; margin-left: 800px; } bobby How Gradient Boosting Works Gradient Boosting is an extremely powerful machine...">
+      <meta name="twitter:description" content="img.center60 { display: block; margin-left: auto; margin-right: auto; width: 60%; } billy How Gradient Boosting Works Gradient Boosting...">
 
 <script type="application/ld+json">
 {
@@ -84,7 +84,7 @@
   },
   "image": "https://miro.medium.com/max/990/1*vSq_qbgw1xhR86DFMlMgUQ.jpeg",
   "url": "https://jordan-Milne.github.io/Blog/Gradient Boosting.html",
-  "description": "img { display: block; margin-left: 800px; } bobby How Gradient Boosting Works Gradient Boosting is an extremely powerful machine..."
+  "description": "img.center60 { display: block; margin-left: auto; margin-right: auto; width: 60%; } billy How Gradient Boosting Works Gradient Boosting..."
 }
 </script>
 </head>
@@ -138,14 +138,15 @@
         <div class="inner">
             <section class="post-content">
                 <style>
-img {
-  display: block;
-  margin-left: 800px;
-
+img.center60 {
+display: block;
+margin-left: auto;
+margin-right: auto;
+ width: 60%;
 }
 </style>
 
-<p>bobby</p>
+<p>billy</p>
 <h1>How Gradient Boosting Works</h1>
 <p>Gradient Boosting is an extremely powerful machine learning algorithm that can handle both regression and classification problems. Gradient Boosting is built of the backs of multiple decision trees, so it is neccearcy to understand decision trees to understand gradient boosting.</p>
 <h2>Decision Trees</h2>
@@ -160,15 +161,15 @@ img {
 
 <p>This can be translated as Gini Impurity = 1 - (probability of yes)<sup>2</sup> - (probability of no)<sup>2</sup></p>
 <p>For the leaf node on the <strong>left</strong>:</p>
-<p><img src="https://latex.codecogs.com/gif.latex?Gini&space;Impurity&space;=&space;1&space;-&space;\left&space;(\frac{105}{105&plus;39}&space;\right&space;)^{2}&space;-&space;\left&space;(\frac{39}{105&plus;39}&space;\right&space;)^{2}&space;=&space;0.395" title="Gini Impurity = 1 - \left (\frac{105}{105+39} \right )^{2} - \left (\frac{39}{105+39} \right )^{2} = 0.395" style="width:60%"/></p>
+<p><img src="https://latex.codecogs.com/gif.latex?Gini&space;Impurity&space;=&space;1&space;-&space;\left&space;(\frac{105}{105&plus;39}&space;\right&space;)^{2}&space;-&space;\left&space;(\frac{39}{105&plus;39}&space;\right&space;)^{2}&space;=&space;0.395" title="Gini Impurity = 1 - \left (\frac{105}{105+39} \right )^{2} - \left (\frac{39}{105+39} \right )^{2} = 0.395" class="center60"/></p>
 <p>For the leaf node on the <strong>right</strong>:</p>
-<p><img src="https://latex.codecogs.com/gif.latex?Gini&space;Impurity&space;=&space;1&space;-&space;\left&space;(\frac{34}{125&plus;34}&space;\right&space;)^{2}&space;-&space;\left&space;(\frac{125}{125&plus;34}&space;\right&space;)^{2}&space;=&space;0.336" title="Gini Impurity = 1 - \left (\frac{34}{125+34} \right )^{2} - \left (\frac{125}{125+34} \right )^{2} = 0.336" style="width:60%"/></p>
+<p><img src="https://latex.codecogs.com/gif.latex?Gini&space;Impurity&space;=&space;1&space;-&space;\left&space;(\frac{34}{125&plus;34}&space;\right&space;)^{2}&space;-&space;\left&space;(\frac{125}{125&plus;34}&space;\right&space;)^{2}&space;=&space;0.336" title="Gini Impurity = 1 - \left (\frac{34}{125+34} \right )^{2} - \left (\frac{125}{125+34} \right )^{2} = 0.336" class="center60"/></p>
 <p>Now, we take the weighted average of the leaf node impurities based on amount of datapoints:</p>
 <p><img src="https://latex.codecogs.com/gif.latex?\left&space;(\frac{144}{144&plus;159}&space;\right&space;)0.395&space;-&space;\left&space;(\frac{159}{144&plus;159}&space;\right&space;)0.336&space;=&space;0.364" title="\left (\frac{144}{144+159} \right )0.395 - \left (\frac{159}{144+159} \right )0.336 = 0.364" style="width:50%"/></p>
 <p>This is done for every column and the one with the <strong>lowest</strong> impurity will be chosen as the root node! This same idea is used to select the next nodes, and the next, etc.</p>
 <h2>Gradient Boost (Regression)</h2>
 <p>This example below on predicting IQ using the the dataset in figure 3 will be used to explain how gradient boosting works for regression.</p>
-<p><img src="images/gb2.png" alt="drawing" style="width:70%"/></p>
+<p><img src="images/gb2.png" alt="drawing" class="center60"/></p>
 <div align="center">Figure 3</div>
 
 <h3>Step 1: Gradient Boost first takes the average value of the target column as the initial prediction.</h3>

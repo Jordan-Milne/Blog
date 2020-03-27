@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"><title>Jordan's Data Science Secrets - misc</title><link href="https://jordan-Milne.github.io/Blog/" rel="alternate"></link><link href="https://jordan-Milne.github.io/Blog/feeds/misc.atom.xml" rel="self"></link><id>https://jordan-Milne.github.io/Blog/</id><updated>2020-03-15T11:35:00-04:00</updated><entry><title>Gradient Bossting: Under The Hood</title><link href="https://jordan-Milne.github.io/Blog/Gradient%20Boosting.html" rel="alternate"></link><published>2020-03-15T11:35:00-04:00</published><updated>2020-03-15T11:35:00-04:00</updated><author><name>Jordan Milne</name></author><id>tag:jordan-milne.github.io,2020-03-15:/Blog/Gradient Boosting.html</id><summary type="html">&lt;style&gt;
-img {
-  display: block;
-  margin-left: 800px;
-
+img.center60 {
+display: block;
+margin-left: auto;
+margin-right: auto;
+ width: 60%;
 }
 &lt;/style&gt;
 
-&lt;p&gt;bobby&lt;/p&gt;
+&lt;p&gt;billy&lt;/p&gt;
 &lt;h1&gt;How Gradient Boosting Works&lt;/h1&gt;
-&lt;p&gt;Gradient Boosting is an extremely powerful machine learning algorithm that can handle both regression and classification problems. Gradient Boosting is built of the backs of multiple decision trees, so it is neccearcy to understand decision trees to understand gradient boosting …&lt;/p&gt;</summary><content type="html">&lt;style&gt;
-img {
-  display: block;
-  margin-left: 800px;
-
+&lt;p&gt;Gradient Boosting is an extremely powerful machine learning algorithm that can handle both regression and classification problems. Gradient Boosting is built of the backs of multiple decision trees, so it is neccearcy to understand decision …&lt;/p&gt;</summary><content type="html">&lt;style&gt;
+img.center60 {
+display: block;
+margin-left: auto;
+margin-right: auto;
+ width: 60%;
 }
 &lt;/style&gt;
 
-&lt;p&gt;bobby&lt;/p&gt;
+&lt;p&gt;billy&lt;/p&gt;
 &lt;h1&gt;How Gradient Boosting Works&lt;/h1&gt;
 &lt;p&gt;Gradient Boosting is an extremely powerful machine learning algorithm that can handle both regression and classification problems. Gradient Boosting is built of the backs of multiple decision trees, so it is neccearcy to understand decision trees to understand gradient boosting.&lt;/p&gt;
 &lt;h2&gt;Decision Trees&lt;/h2&gt;
@@ -32,15 +34,15 @@ img {
 
 &lt;p&gt;This can be translated as Gini Impurity = 1 - (probability of yes)&lt;sup&gt;2&lt;/sup&gt; - (probability of no)&lt;sup&gt;2&lt;/sup&gt;&lt;/p&gt;
 &lt;p&gt;For the leaf node on the &lt;strong&gt;left&lt;/strong&gt;:&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://latex.codecogs.com/gif.latex?Gini&amp;space;Impurity&amp;space;=&amp;space;1&amp;space;-&amp;space;\left&amp;space;(\frac{105}{105&amp;plus;39}&amp;space;\right&amp;space;)^{2}&amp;space;-&amp;space;\left&amp;space;(\frac{39}{105&amp;plus;39}&amp;space;\right&amp;space;)^{2}&amp;space;=&amp;space;0.395" title="Gini Impurity = 1 - \left (\frac{105}{105+39} \right )^{2} - \left (\frac{39}{105+39} \right )^{2} = 0.395" style="width:60%"/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://latex.codecogs.com/gif.latex?Gini&amp;space;Impurity&amp;space;=&amp;space;1&amp;space;-&amp;space;\left&amp;space;(\frac{105}{105&amp;plus;39}&amp;space;\right&amp;space;)^{2}&amp;space;-&amp;space;\left&amp;space;(\frac{39}{105&amp;plus;39}&amp;space;\right&amp;space;)^{2}&amp;space;=&amp;space;0.395" title="Gini Impurity = 1 - \left (\frac{105}{105+39} \right )^{2} - \left (\frac{39}{105+39} \right )^{2} = 0.395" class="center60"/&gt;&lt;/p&gt;
 &lt;p&gt;For the leaf node on the &lt;strong&gt;right&lt;/strong&gt;:&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://latex.codecogs.com/gif.latex?Gini&amp;space;Impurity&amp;space;=&amp;space;1&amp;space;-&amp;space;\left&amp;space;(\frac{34}{125&amp;plus;34}&amp;space;\right&amp;space;)^{2}&amp;space;-&amp;space;\left&amp;space;(\frac{125}{125&amp;plus;34}&amp;space;\right&amp;space;)^{2}&amp;space;=&amp;space;0.336" title="Gini Impurity = 1 - \left (\frac{34}{125+34} \right )^{2} - \left (\frac{125}{125+34} \right )^{2} = 0.336" style="width:60%"/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://latex.codecogs.com/gif.latex?Gini&amp;space;Impurity&amp;space;=&amp;space;1&amp;space;-&amp;space;\left&amp;space;(\frac{34}{125&amp;plus;34}&amp;space;\right&amp;space;)^{2}&amp;space;-&amp;space;\left&amp;space;(\frac{125}{125&amp;plus;34}&amp;space;\right&amp;space;)^{2}&amp;space;=&amp;space;0.336" title="Gini Impurity = 1 - \left (\frac{34}{125+34} \right )^{2} - \left (\frac{125}{125+34} \right )^{2} = 0.336" class="center60"/&gt;&lt;/p&gt;
 &lt;p&gt;Now, we take the weighted average of the leaf node impurities based on amount of datapoints:&lt;/p&gt;
 &lt;p&gt;&lt;img src="https://latex.codecogs.com/gif.latex?\left&amp;space;(\frac{144}{144&amp;plus;159}&amp;space;\right&amp;space;)0.395&amp;space;-&amp;space;\left&amp;space;(\frac{159}{144&amp;plus;159}&amp;space;\right&amp;space;)0.336&amp;space;=&amp;space;0.364" title="\left (\frac{144}{144+159} \right )0.395 - \left (\frac{159}{144+159} \right )0.336 = 0.364" style="width:50%"/&gt;&lt;/p&gt;
 &lt;p&gt;This is done for every column and the one with the &lt;strong&gt;lowest&lt;/strong&gt; impurity will be chosen as the root node! This same idea is used to select the next nodes, and the next, etc.&lt;/p&gt;
 &lt;h2&gt;Gradient Boost (Regression)&lt;/h2&gt;
 &lt;p&gt;This example below on predicting IQ using the the dataset in figure 3 will be used to explain how gradient boosting works for regression.&lt;/p&gt;
-&lt;p&gt;&lt;img src="images/gb2.png" alt="drawing" style="width:70%"/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="images/gb2.png" alt="drawing" class="center60"/&gt;&lt;/p&gt;
 &lt;div align="center"&gt;Figure 3&lt;/div&gt;
 
 &lt;h3&gt;Step 1: Gradient Boost first takes the average value of the target column as the initial prediction.&lt;/h3&gt;
