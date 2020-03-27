@@ -55,10 +55,11 @@
 &lt;p&gt;Using the equation above, we get  F&lt;sub&gt;m&lt;/sub&gt;(x) = 73.3 + 0.1(8.7)&lt;/p&gt;
 &lt;p&gt;F&lt;sub&gt;m&lt;/sub&gt;(x) = 74.2&lt;/p&gt;
 &lt;p&gt;Now, the actual value for the first row is actually 88 &lt;em&gt;but&lt;/em&gt; 74.2 is closer than the original prediction of 73.3&lt;/p&gt;
-&lt;p&gt;&lt;img src="images/tree.jpg" alt="drawing" width="30"/&gt;
-&lt;img alt="png" src="images/tree.jpg|width=100px"&gt;
-&lt;img alt="png2" src="images/tree.jpg | width=100px"&gt;
-&lt;img alt="smiley" height="36px" src="images/tree.jpg" width="36px"&gt;.&lt;/p&gt;
+&lt;div style="width:50px";&gt; ![Kitten](images/tree.jpg) &lt;/div&gt;
+
+&lt;div style="width:50px"&gt; ![Kitten](images/tree.jpg) &lt;/div&gt;
+
+&lt;p&gt;&lt;img alt="smiley" height="36px" src="images/tree.jpg" width="36px"&gt;&lt;/p&gt;
 &lt;div align="center"&gt;Figure 4&lt;/div&gt;
 
 &lt;h3&gt;Step 5: Repeat Steps 2 - 4 with updated predictions for the amount of interations specified!&lt;/h3&gt;
