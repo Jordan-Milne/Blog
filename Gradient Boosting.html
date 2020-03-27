@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+
+  <title>Gradient Bossting: Under The Hood</title>
+
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="origin" />
+  <meta name="generator" content="Pelican" />
+<link href="https://jordan-Milne.github.io/Blog/Gradient Boosting.html" rel="canonical" />
+  <!-- Feed -->
+        <link href="https://jordan-Milne.github.io/Blog/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Jordan's Data Science Secrets Full Atom Feed" />
+          <link href="https://jordan-Milne.github.io/Blog/feeds/{slug}.atom.xml" type="application/atom+xml" rel="alternate" title="Jordan's Data Science Secrets Categories Atom Feed" />
+
+  <link href="https://jordan-Milne.github.io/Blog/theme/css/style.css" type="text/css" rel="stylesheet" />
+
+  <!-- Code highlight color scheme -->
+      <link href="https://jordan-Milne.github.io/Blog/theme/css/code_blocks/github.css" rel="stylesheet">
+
+
+  <!-- Custom fonts -->
+  <link href='https://fonts.googleapis.com/css?family=Montserrat:400,300' rel='stylesheet' type='text/css' />
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css" />
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+
+
+    <meta name="description" content="How Gradient Boosting Works Gradient Boosting is an extremely powerful machine learning algorithm that can handle both regression and...">
+
+    <meta name="author" content="Jordan Milne">
+
+
+
+
+
+<!-- Open Graph -->
+<meta property="og:site_name" content="Jordan's Data Science Secrets"/>
+<meta property="og:title" content="Gradient Bossting: Under The Hood"/>
+<meta property="og:description" content="How Gradient Boosting Works Gradient Boosting is an extremely powerful machine learning algorithm that can handle both regression and..."/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="https://jordan-Milne.github.io/Blog/Gradient Boosting.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2020-03-15 11:35:00-04:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="https://jordan-Milne.github.io/Blog/author/jordan-milne.html">
+<meta property="article:section" content="misc"/>
+<meta property="og:image" content="https://miro.medium.com/max/990/1*vSq_qbgw1xhR86DFMlMgUQ.jpeg">
+
+<!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@J0rdans_secrets">
+    <meta name="twitter:title" content="Gradient Bossting: Under The Hood">
+    <meta name="twitter:url" content="https://jordan-Milne.github.io/Blog/Gradient Boosting.html">
+
+        <meta name="twitter:image:src" content="https://miro.medium.com/max/990/1*vSq_qbgw1xhR86DFMlMgUQ.jpeg">
+
+      <meta name="twitter:description" content="How Gradient Boosting Works Gradient Boosting is an extremely powerful machine learning algorithm that can handle both regression and...">
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "name": "Gradient Bossting: Under The Hood",
+  "headline": "Gradient Bossting: Under The Hood",
+  "datePublished": "2020-03-15 11:35:00-04:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "Jordan Milne",
+    "url": "https://jordan-Milne.github.io/Blog/author/jordan-milne.html"
+  },
+  "image": "https://miro.medium.com/max/990/1*vSq_qbgw1xhR86DFMlMgUQ.jpeg",
+  "url": "https://jordan-Milne.github.io/Blog/Gradient Boosting.html",
+  "description": "How Gradient Boosting Works Gradient Boosting is an extremely powerful machine learning algorithm that can handle both regression and..."
+}
+</script>
+</head>
+<!-- TODO : Body class -->
+<body class="home-template">
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+
+
+    </ul>
+  </div>
+</nav>
+    <!-- Progressbar -->
+    <div class="progress-container">
+        <span class="progress-bar"></span>
+    </div>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header id="post-header" class="has-cover">
+      <div class="inner">
+        <nav id="navigation">
+            <span id="home-button" class="nav-button">
+                <a class="home-button" href="https://jordan-Milne.github.io/Blog/" title="Home"><i class="ic ic-arrow-left"></i> Home</a>
+            </span>
+          <span id="menu-button" class="nav-button">
+            <a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
+          </span>
+        </nav>
+        <h1 class="post-title">Gradient Bossting: Under The Hood</h1>
+        <!-- TODO : Proper class for headline -->
+        <span class="post-meta">
+                <a href="https://jordan-Milne.github.io/Blog/author/jordan-milne.html">Jordan Milne</a>
+            | <time datetime="Sun 15 March 2020">Sun 15 March 2020</time>
+        </span>
+        <!-- TODO : Modified check -->
+            <div class="post-cover cover" style="background-image: url('https://miro.medium.com/max/990/1*vSq_qbgw1xhR86DFMlMgUQ.jpeg')">
+      </div>
+    </header>
+
+  <section id="wrapper">
+    <a class="hidden-close"></a>
+
+    <!-- Post content -->
+    <main class="content" role="main">
+        <article class="post">
+        <div class="inner">
+            <section class="post-content">
+                <h1>How Gradient Boosting Works</h1>
+<p>Gradient Boosting is an extremely powerful machine learning algorithm that can handle both regression and classification problems. Gradient Boosting is built of the backs of multiple decision trees, so it is neccearcy to understand decision trees to understand gradient boosting.</p>
+<h2>Decision Trees</h2>
+<p>Simply put, a decision tree asks questions, and then classifies the data based on the answers. The node very top of a decision tree is called the <strong>root node</strong>, the nodes at the very bottom are called <strong>leaf nodes</strong>, and the nodes in between are called <strong>internal nodes</strong>.</p>
+<p><img alt="alt text" src="https://miro.medium.com/max/1700/0*0dN6d8THyImxwPeD.png"></p>
+<h3><div align="center">Figure 1</div></h3>
+<h3>How Decision Trees Work</h3>
+<p>If we want to classify if it is a good day to go golfing (the dataset below), how do we decide what the root node should be? First we check how well each column seperates the data based on the target. In the imaginary dataset below, we look at all 303 days and see how outlook seperates 'Play Golf'. The most common method of ranking which column seperates the data the best is by using the Gini impurity. </p>
+<p><img src="images/data.png" alt="drawing" width="800"/></p>
+<h3><div align="center">Figure 2</div></h3>
+<h3>The Gini Impurity</h3>
+<p><img src="https://lh3.googleusercontent.com/proxy/N2bTnDiF8c7ddfJwxtyxG3QbM3WBBkq7qXiwjacStcGxMrTBKxTusq4SieXSde0QTvWor8PR51Pq8KTPA1qhK6iLk1U43014-_U6Crh2ifjBrv6a4UwKKto7sNtMYyrknHwo8HMT2aDB" alt="drawing" width="150"/></p>
+<p>This can be translated as Gini Impurity = 1 - (probability of yes)<sup>2</sup> - (probability of no)<sup>2</sup></p>
+<p>For the leaf node on the <strong>left</strong>, Gini Impurity = 1 - $(\frac{105}{105+39})$<sup>2</sup> - $(\frac{39}{105+39})$<sup>2</sup> = 0.395</p>
+<p>For the leaf node on the <strong>right</strong>, Gini Impurity = 1 - $(\frac{34}{125+34})$<sup>2</sup> - $(\frac{125}{125+34})$<sup>2</sup> = 0.336</p>
+<p>Now, we take the weighted average of the leaf node impurities based on amount of datapoints: $(\frac{144}{144+159})$0.395 +  $(\frac{159}{144+159})$0.336 = <strong>0.364</strong></p>
+<p>This is done for every column and the one with the <strong>lowest</strong> impurity will be chosen as the root node! This same idea is used to select the next nodes, and the next, etc.</p>
+<h2>Gradient Boost (Regression)</h2>
+<p>This example below on predicting IQ using the the dataset in figure 3 will be used to explain how gradient boosting works for regression.</p>
+<p><img src="images/gb2.png" alt="drawing" width="300"/></p>
+<h3><div align="center">Figure 3</div></h3>
+<h3>Step 1: Gradient Boost first takes the average value of the target column as the initial prediction.</h3>
+<p><strong>Details:</strong> Gradient Boost uses a loss function, <em>L(y<sub>i</sub>,F(x))</em> which is equal to $\frac{1}{2}$(Observed - Predicted)<sup>2</sup></p>
+<p>F<sub>0</sub>(x) = argmin$\sum_{i=1}^{n} L(y_i,y)$, In english this means sum up the loss function of the rows and find the minimum value. This can be done by taking the derivative of each term with respect to the predicted (y<sub>i</sub>). </p>
+<p>Working through the first row (using the chain rule) looks like this: $\frac{d}{d Predicted}$ $\frac{1}{2}$(88-Predicted)) = - (88-Predicted))</p>
+<p>Now doing this for all 3 rows and setting the sum of the derivates to 0 will allow us to find the minimum value</p>
+<p>-(88-Predicted))+(-(76-Predicted)) + (-(56-Predicted)) = 0</p>
+<p>Predicted = <strong>73.3</strong></p>
+<h3>Step 2: Gradient Boost  subtracts the average (intial prediction) from each row's target and stores in the 'Pseudo Residual Columns'</h3>
+<p><strong>Details:</strong> Gradient Boost uses this function to calculate the pseudo residuals: r<sub>im</sub> =  - $\frac{∂L(y_i,F(x))}{∂F(x)}$ which actually just simplifies to (Observed - Predicted) for a specific row. </p>
+<p>Applying this simple formula to all the rows gives us residuals which are stored in the Pseudo Residual column as seen above.</p>
+<h3>Step 3: Gradient Boost Builds a decision tree to predict the <strong>pseudo residual</strong> values.</h3>
+<p><strong>Details:</strong> Gradient Boost builds a decision tree and classifies the pseudo residuals as shown in Figure 3. The value of the leaves is calculated using the following equation: γ<sub>jm</sub> = argmin$\sum_{i=1}^{n} L(y_i,F_m(x_i)+γ)$</p>
+<p>This seemingly complex equation is actually pretty simple and similar to the equation from Step 1. The equation quickly reduces down to just being the average of the values in each leaf. So the value of the left leaf in Figure 4 is $\frac{14.7 + 2.7}{2}$ = 8.7 and just -17.3 for the right leaf.</p>
+<h3>Step 4: Make a new prediction for each sample by updating <em>F<sub>m</sub>(x)</em></h3>
+<p><strong>Details</strong> Gradient Boost uses the following equation to make a new prediction: <em>F<sub>m</sub>(x) = F<sub>m-1</sub>(x) + ν$\sum_{j=1}^{J_m} y_iI(x E R_j)$</em></p>
+<p>In english that equation translates to: The new prediction (<em>F<sub>m</sub>(x)</em>) is equal to the old prediction (<em>F<sub>m-1</sub>(x)</em>) + the learning rate (<em>ν</em>) multiplied by the pseudo residual (*$\sum_{j=1}^{J_m} y_iI(x E R_j)$). The learning rate is a parameter that can be changed but is a number between 0 and 1.  The learning rate is proven to reduce variance resulting in better predictions.</p>
+<p><strong>Using the tree below and a learning rate of 0.1, let's make a prediction for the first row from Fig 3.</strong></p>
+<p>Using the equation F<sub>m</sub>(x) = F<sub>m-1</sub>(x) + ν$\sum_{j=1}^{J_m} y_iI(x E R_j)$  we get  F<sub>m</sub>(x) = 73.3 + 0.1(8.7)</p>
+<p>F<sub>m</sub>(x) = 74.2</p>
+<p>Now, the actual value for the first row is actually 88 BUT 74.2 is closer than the original prediction of 73.3</p>
+<p><img src="images/tree.jpg" alt="drawing" width="300"/></p>
+<h3><div align="center">Figure 4</div></h3>
+<h3>Step 5: Repeat Steps 2 - 4 with updated predictions for the amount of interations specified!</h3>
+<p>When broken down into small steps, the complex equations that make up gradient boosting for regression can be easily understood.</p>
+            </section>
+
+            <section class="post-info">
+                <div class="post-share">
+                    <a class="twitter" href="https://twitter.com/share?text=Gradient Bossting: Under The Hood&amp;url=https://jordan-Milne.github.io/Blog/Gradient Boosting.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
+                    </a>
+                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://jordan-Milne.github.io/Blog/Gradient Boosting.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
+                    </a>
+                    <a class="googleplus" href="https://plus.google.com/share?url=https://jordan-Milne.github.io/Blog/Gradient Boosting.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
+                    </a>
+                    <div class="clear"></div>
+                </div>
+
+
+                <div class="clear"></div>
+
+
+                </section>
+
+
+                <aside class="post-nav">
+                    <div class="clear"></div>
+                </aside>
+
+            </div>
+        </article>
+    </main>
+      <!-- TODO : Body class -->
+    <div id="body-class" style="display: none;" class=""></div>
+
+    <footer id="footer">
+      <div class="inner">
+        <section class="credits">
+
+
+          <span class="credits-theme">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow">Attila</a></span>
+          <span class="credits-software">Published with <a href="https://github.com/getpelican/pelican" rel="nofollow">Pelican</a></span>
+        </section>
+      </div>
+    </footer>
+  </section>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://jordan-Milne.github.io/Blog/theme/js/script.js"></script>
+
+</body>
+</html>
