@@ -1,33 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Jordan's Data Science Secrets - Jordan Milne</title><link>https://jordan-Milne.github.io/Blog/</link><description></description><lastBuildDate>Sun, 15 Mar 2020 11:35:00 -0400</lastBuildDate><item><title>Gradient Bossting: Under The Hood</title><link>https://jordan-Milne.github.io/Blog/Gradient%20Boosting.html</link><description>&lt;style&gt;
+<rss version="2.0"><channel><title>Jordan's Data Science Secrets - Jordan Milne</title><link>https://jordan-Milne.github.io/Blog/</link><description></description><lastBuildDate>Wed, 15 Apr 2020 11:35:00 -0400</lastBuildDate><item><title>Making Interactive Visualizations in Python</title><link>https://jordan-Milne.github.io/Blog/Altair%20Stocks.html</link><description>&lt;h2&gt;In this blog post I will be using the following two DataFrames (Apple's stock and the NASDAQ index) to show you how to make a simple plot in Matplotlib and then an interactive version of that plot in Altair.&lt;/h2&gt;
+&lt;p&gt;Lately I have been analyzing stocks using &lt;a href="https://github.com/Jordan-Milne/PROJECT-covid_stocks/blob/master/COVID_stocks.ipynb"&gt;python and the yfinance …&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Jordan Milne</dc:creator><pubDate>Wed, 15 Apr 2020 11:35:00 -0400</pubDate><guid isPermaLink="false">tag:jordan-milne.github.io,2020-04-15:/Blog/Altair Stocks.html</guid><category>misc</category></item><item><title>Gradient Bossting: Under The Hood</title><link>https://jordan-Milne.github.io/Blog/Gradient%20Boosting.html</link><description>&lt;h1&gt;How Gradient Boosting Works&lt;/h1&gt;
+&lt;p&gt;Gradient Boosting is an extremely powerful machine learning algorithm that can handle both regression and classification problems. Gradient Boosting is built of the backs of multiple decision trees, so it is neccearcy to understand decision trees to understand gradient boosting.&lt;/p&gt;
+&lt;style&gt;
 img.center60 {
 display: block;
-margin-left: auto;
-margin-right: auto;
- width: 60%;
-}
-img.center50 {
-display: block;
-margin-left: auto;
-margin-right: auto;
- width: 60%;
-}
-img.center30 {
-display: block;
-margin-left: auto;
-margin-right: auto;
- width: 30%;
-}
-img.center40 {
-display: block;
-margin-left: auto;
-margin-right: auto;
- width: 40%;
-}
-&lt;/style&gt;
-
-&lt;h1&gt;How Gradient Boosting Works&lt;/h1&gt;
-&lt;p&gt;Gradient Boosting is an extremely powerful …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Jordan Milne</dc:creator><pubDate>Sun, 15 Mar 2020 11:35:00 -0400</pubDate><guid isPermaLink="false">tag:jordan-milne.github.io,2020-03-15:/Blog/Gradient Boosting.html</guid><category>misc</category></item><item><title>Understanding the Brain of the Long Short-Term Memory Network (LSTM)</title><link>https://jordan-Milne.github.io/Blog/LSTM%20Breakdown.html</link><description>&lt;h2&gt;In this blog post I explain why a simple Recurrent Neural Network (RNN) is not the best choice for text generation and give an in depth review on how a LSTM network operates.&lt;/h2&gt;
+margin-left: auto …&lt;/style&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Jordan Milne</dc:creator><pubDate>Sun, 15 Mar 2020 11:35:00 -0400</pubDate><guid isPermaLink="false">tag:jordan-milne.github.io,2020-03-15:/Blog/Gradient Boosting.html</guid><category>misc</category></item><item><title>Understanding the Brain of the Long Short-Term Memory Network (LSTM)</title><link>https://jordan-Milne.github.io/Blog/LSTM%20Breakdown.html</link><description>&lt;h2&gt;In this blog post I explain why a simple Recurrent Neural Network (RNN) is not the best choice for text generation and give an in depth review on how a LSTM network operates.&lt;/h2&gt;
 &lt;h2&gt;RNN&lt;/h2&gt;
 &lt;p&gt;Unlike a feedforward or sequential neural networks, the outputs of some layers in RNNs are fed …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Jordan Milne</dc:creator><pubDate>Sat, 15 Feb 2020 11:35:00 -0500</pubDate><guid isPermaLink="false">tag:jordan-milne.github.io,2020-02-15:/Blog/LSTM Breakdown.html</guid><category>misc</category></item><item><title>Battle of the Stats: Sheldon Keefe vs Mike Babcock</title><link>https://jordan-Milne.github.io/Blog/Sheldon%20Keefe%20vs%20Mike%20Babcock.html</link><description>&lt;h2&gt;In Sheldon Keefe’s coaching first 20 games he had a league-best 15-4-1 record that equated to a 127-point pace for the season.&lt;/h2&gt;
 &lt;p&gt;In this blog I use bayesian statistics and pymc3 to get answers about the Leafs performance under the two coaches.&lt;/p&gt;
